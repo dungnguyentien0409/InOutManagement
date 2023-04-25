@@ -1,0 +1,32 @@
+version: '3.4'
+
+networks:
+  myappnetwork:
+    name: myappnetwork
+
+services:
+  doorapi:
+    image: ${DOCKER_REGISTRY-}doorapi
+    build:
+      context: .
+      dockerfile: DoorApi/Dockerfile
+    links:
+      - sqldata
+    depends_on:
+      sqldata:
+        condition: service_started
+    networks:
+      - myappnetwork
+
+  sqldata:  
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "MyPass@word"  
+    volumes:  
+      - ./data/mssql:/var/opt/mssql3
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:  
+      - '1441:1433'
+    networks:
+      - myappnetwork
