@@ -2,6 +2,7 @@
 using AutoMapper;
 using Entities;
 using Common.Door.Dto;
+using Common.Admin.Dto;
 
 namespace MappingProfiles
 {
@@ -10,7 +11,9 @@ namespace MappingProfiles
 		public EntitiesToDtosMappingProfile()
 		{
 			CreateMap<Entities.Door, DoorDto>().ReverseMap();
-		}
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<UserInfoRole, UserInfoRoleDto>().ReverseMap();
+        }
 	}
 }
 

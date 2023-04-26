@@ -1,17 +1,14 @@
-﻿using Interfaces;
+﻿using AutoMapper;
 using DataAccessEF;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
 using Implementations;
-using MinimalApi.Endpoint.Configurations.Extensions;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+using Interfaces;
 using MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MinimalApi.Endpoint.Configurations.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
@@ -21,8 +18,6 @@ builder.Services.AddDbContext<InOutManagementContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-builder.Services.AddControllers();
-builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
     mc.AddProfile(new DtosToViewModelsMappingProfile());
@@ -37,6 +32,10 @@ builder.Services.AddAuthentication(x =>
 {
     x.TokenValidationParameters = new TokenValidationParameters();
 });
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IDoorRoleService, DoorRoleService>();
+builder.Services.AddTransient<IUserRoleService, UserRoleService>();
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -49,6 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

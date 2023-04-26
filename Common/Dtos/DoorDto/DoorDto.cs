@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Dto
+namespace Common.Door.Dto
 {
 	public class DoorDto
 	{

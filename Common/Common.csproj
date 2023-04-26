@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Dtos\" />
+    <None Remove="Dtos\UserDto\" />
+    <None Remove="Dtos\DoorDto\" />
+    <None Remove="Dtos\AdminDto\" />
+    <None Remove="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Dtos\UserDto\" />
+    <Folder Include="Dtos\DoorDto\" />
+    <Folder Include="Dtos\AdminDto\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+</Project>

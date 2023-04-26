@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using ViewModels;
-using Dto;
+using Common.Door.Dto;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +26,7 @@ namespace DoorApi.Controllers
 		[HttpPost("open")]
 		public bool Open(DoorViewModel viewModel)
 		{
-			var dto = _mapper.Map<DoorDto>(viewModel);
+            var dto = _mapper.Map<DoorDto>(viewModel);
 
 			if (!_doorService.ValidOpen(dto))
 			{
@@ -38,17 +38,24 @@ namespace DoorApi.Controllers
 			return true;
 		}
 
-		[HttpGet("test_admin")]
-        [Authorize(Roles = "Admin,User")]
-        public string TestAdmin()
+        [HttpPost("create")]
+        public bool Create(DoorViewModel viewModel)
+        {
+            var dto = _mapper.Map<DoorDto>(viewModel);
+
+            return _doorService.CreateDoor(dto);
+        }
+
+		[HttpGet("test-admin")]
+		public string TestAdmin()
 		{
-			return "Hello Hee Admin";
+			return "Admin role";
 		}
 
-        [HttpGet("test_user")]
-        public string TestUser()
+        [HttpGet("test-normal")]
+        public string TestNormal()
         {
-            return "Hello Hee User";
+            return "Normal role";
         }
     }
 }

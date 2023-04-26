@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using Dto;
+using Common.Door.Dto;
 using ViewModels;
 
 namespace MappingProfiles

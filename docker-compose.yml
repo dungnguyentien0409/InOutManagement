@@ -18,6 +18,32 @@ services:
     networks:
       - myappnetwork
 
+  userapi:
+    image: ${DOCKER_REGISTRY-}userapi
+    build:
+      context: .
+      dockerfile: UserApi/Dockerfile
+    links:
+      - sqldata
+    depends_on:
+      sqldata:
+        condition: service_started
+    networks:
+      - myappnetwork
+
+  adminapi:
+    image: ${DOCKER_REGISTRY-}adminapi
+    build:
+      context: .
+      dockerfile: AdminApi/Dockerfile
+    links:
+      - sqldata
+    depends_on:
+      sqldata:
+        condition: service_started
+    networks:
+      - myappnetwork
+
   sqldata:  
     image: mcr.microsoft.com/azure-sql-edge:latest
     environment:  
@@ -31,9 +57,5 @@ services:
     networks:
       - myappnetwork
 
-  userapi:
-    image: ${DOCKER_REGISTRY-}userapi
-    build:
-      context: .
-      dockerfile: UserApi/Dockerfile
+  
 
