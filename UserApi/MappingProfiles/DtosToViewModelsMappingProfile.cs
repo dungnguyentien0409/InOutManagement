@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using Dto;
+using Common.User.Dto;
 using ViewModels;
 
 namespace MappingProfiles
@@ -10,8 +10,6 @@ namespace MappingProfiles
 		public DtosToViewModelsMappingProfile()
 		{
 			CreateMap<UserInfoDto, UserViewModel>().ReverseMap();
-			CreateMap<RoleDto, RoleViewModel>().ReverseMap();
-			CreateMap<UserInfoRoleDto, UserInfoRoleViewModel>().ReverseMap();
 		}
 	}
 }

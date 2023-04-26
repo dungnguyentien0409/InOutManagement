@@ -30,7 +30,6 @@
     <None Remove="Services\" />
     <None Remove="Services\Interfaces\" />
     <None Remove="Services\Implementations\" />
-    <None Remove="Services\Dto\" />
     <None Remove="ViewModels\" />
     <None Remove="MappingProfiles\" />
   </ItemGroup>
@@ -38,7 +37,6 @@
     <Folder Include="Services\" />
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementations\" />
-    <Folder Include="Services\Dto\" />
     <Folder Include="ViewModels\" />
     <Folder Include="MappingProfiles\" />
   </ItemGroup>
@@ -47,6 +45,9 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\DataAccessEF\DataAccessEF.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

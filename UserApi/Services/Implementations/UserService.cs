@@ -1,29 +1,33 @@
 ﻿using System;
 using Interfaces;
 using Entities;
-using Dto;
+using Common.User.Dto;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Implementations
 {
 	public class UserService : IUserService
 	{
-		IUnitOfWork _unitOfWork;
-		IMapper _mapper;
-		IPasswordHelper _passwordHelepr;
-		IConfiguration _config;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+		private readonly IConfiguration _config;
+        private readonly ILogger<UserService> _logger;
+		private readonly int SALT_SIZE;
 
-		public UserService(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHelper passwordHelper, IConfiguration config)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config,
+			ILogger<UserService> logger)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
-			_passwordHelepr = passwordHelper;
 			_config = config;
-		}
+			_logger = logger;
+			SALT_SIZE = _config.GetValue<int>("SaltSize");
+        }
 
 		public bool SignUp(UserInfoDto userDto)
 		{
@@ -35,8 +39,8 @@ namespace Implementations
 			var userInfo = new UserInfo();
 			userInfo = _mapper.Map<UserInfo>(userDto);
 			userInfo.Id = Guid.NewGuid();
-			userInfo.Salt = _passwordHelepr.GenerateSalt();
-			userInfo.HashedPassword = _passwordHelepr.HashPassword(userDto.Password, userInfo.Salt);
+			userInfo.Salt = Common.Helpers.PasswordHelper.GenerateSalt(SALT_SIZE);
+			userInfo.HashedPassword = Common.Helpers.PasswordHelper.HashPassword(userDto.Password, userInfo.Salt);
 
 			_unitOfWork.UserInfo.Add(userInfo);
 
@@ -50,12 +54,22 @@ namespace Implementations
 			var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userDto.UserName).FirstOrDefault();
 
 			if (userItem == null
-				|| !_passwordHelepr.VerifyPassword(userDto.Password, userItem.Salt, userItem.HashedPassword))
+				|| !Common.Helpers.PasswordHelper.VerifyPassword(userDto.Password, userItem.Salt, userItem.HashedPassword))
 			{
 				return "";
 			}
 
-			return GenerateJwtToken(userDto);
+            var userRoleItem = _unitOfWork.UserInfoRole.Find(f => f.UserInfoId == userItem.Id).FirstOrDefault();
+
+			if (userRoleItem == null)
+			{
+				_logger.LogError("This user does not have any role");
+				return "";
+			}
+
+			userDto.UserRole = userRoleItem.Role.Name;
+
+            return GenerateJwtToken(userDto);
 		}
 
 		private bool VerifyUserInfo(UserInfoDto userDto)
@@ -83,7 +97,8 @@ namespace Implementations
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userDto.UserName),
-				new Claim(ClaimTypes.Role, "Admin")
+				new Claim(ClaimTypes.Role, userDto.UserRole),
+				new Claim("Email", userDto.Email)
             };
 			var issuer = _config.GetValue<string>("Jwt:Issuer");
 			var audience = _config.GetValue<string>("Jwt:Audience");
@@ -128,4 +143,3 @@ namespace Implementations
         }
     }
 }
-

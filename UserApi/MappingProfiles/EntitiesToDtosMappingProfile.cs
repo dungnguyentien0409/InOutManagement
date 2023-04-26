@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Entities;
-using Dto;
+using Common.User.Dto;
 
 namespace MappingProfiles
 {
@@ -10,8 +10,7 @@ namespace MappingProfiles
 		public EntitiesToDtosMappingProfile()
 		{
 			CreateMap<UserInfo, UserInfoDto>().ReverseMap();
-			CreateMap<Role, RoleDto>().ReverseMap();
-			CreateMap<UserInfoRole, UserInfoRoleDto>().ReverseMap();
+			
 		}
 	}
 }

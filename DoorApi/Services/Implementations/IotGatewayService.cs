@@ -1,6 +1,6 @@
 ﻿using System;
 using Interfaces;
-using Dto;
+using Common.Door.Dto;
 
 namespace Implementations
 {

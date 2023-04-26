@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Dto
+namespace Common.Admin.Dto
 {
-	public class StatusDto
+	public class RoleDto
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

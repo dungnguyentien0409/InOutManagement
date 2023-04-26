@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
-using Interfaces;
-namespace Implementations
+
+namespace Common.Helpers
 {
-	public class PasswordHelper : IPasswordHelper
+	public static class PasswordHelper
 	{
-        private IConfiguration _config;
-
-        public PasswordHelper(IConfiguration config)
-		{
-            _config = config;
-		}
-
-        public string HashPassword(string passWord, string salt)
+        public static string HashPassword(string passWord, string salt)
         {
             var algorithm = new SHA256Managed();
 
@@ -24,16 +16,15 @@ namespace Implementations
             return Convert.ToBase64String(hashedResult);
         }
 
-        public bool VerifyPassword(string passWord, string salt, string hashedPassword)
+        public static bool VerifyPassword(string passWord, string salt, string hashedPassword)
         {
             var generatedHasedPassword = HashPassword(passWord, salt);
 
             return generatedHasedPassword.CompareTo(hashedPassword) == 0;
         }
 
-        public string GenerateSalt()
-		{
-            var saltSize = _config.GetValue<int>("SaltSize");
+        public static string GenerateSalt(int saltSize)
+        {
             var rng = new RNGCryptoServiceProvider();
             byte[] buff = new byte[saltSize];
             rng.GetBytes(buff);

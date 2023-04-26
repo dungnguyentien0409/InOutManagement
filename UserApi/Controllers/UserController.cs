@@ -2,7 +2,7 @@
 using Interfaces;
 using ViewModels;
 using AutoMapper;
-using Dto;
+using Common.User.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UserApi.Controllers
