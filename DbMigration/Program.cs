@@ -8,7 +8,7 @@ var config = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-var connectionString = config.GetConnectionString("Connection");
+var connectionString = config.GetConnectionString("DefaultConnection");
 var contextOptions = new DbContextOptionsBuilder<InOutManagementContext>()
     .UseSqlServer(connectionString)
     .Options;

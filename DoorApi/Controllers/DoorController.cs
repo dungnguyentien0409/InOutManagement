@@ -24,7 +24,7 @@ namespace DoorApi.Controllers
 		}
 
 		[HttpPost("open")]
-		public bool Open(DoorViewModel viewModel)
+		public bool Open(OpenDoorViewModel viewModel)
 		{
             var dto = _mapper.Map<DoorDto>(viewModel);
 

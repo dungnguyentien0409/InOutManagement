@@ -15,6 +15,8 @@ namespace UnitOfWork
 		public IRoleRepository Role { get; }
 		public IUserInfoRepository UserInfo { get; }
 		public IUserInfoRoleRepository UserInfoRole { get; }
+		public IInOutHistoryRepository InOutHistory { get; }
+		public IActionStatusRepository ActionStatus { get; }
 
 		public UnitOfWork(InOutManagementContext context)
 		{
@@ -25,6 +27,8 @@ namespace UnitOfWork
 			Role = new RoleRepository(context);
 			UserInfo = new UserInfoRepository(context);
 			UserInfoRole = new UserInfoRoleRepository(context);
+			InOutHistory = new InOutHistoryRepository(context);
+			ActionStatus = new ActionStatusRepository(context);
 		}
 
         public void Dispose()

@@ -33,6 +33,7 @@ namespace Services
             }
 
             CreateUserRole(roleId.Value, userId.Value);
+            CreateActionStatus();
         }
 
         private Guid? CreateRoleAdmin()
@@ -43,6 +44,9 @@ namespace Services
                 adminRole.Id = Guid.NewGuid();
                 adminRole.Name = "Admin";
                 adminRole.Created = DateTime.Now;
+
+                _unitOfWork.Role.Add(adminRole);
+                _unitOfWork.Save();
 
                 return adminRole.Id;
             }
@@ -99,6 +103,33 @@ namespace Services
                 Console.WriteLine("Error when creating user role: " + ex.Message);
 
                 return null;
+            }
+        }
+
+        private void CreateActionStatus()
+        {
+            try
+            {
+                var actions = new string[] { "TAP_IN", "TAP_OUT", "FAILED_TAP_IN", "FAILED_TAP_OUT" };
+                var actionStatusItems = new List<ActionStatus>();
+
+                foreach(var action in actions)
+                {
+                    actionStatusItems.Add(new ActionStatus
+                    {
+                        Id = Guid.NewGuid(),
+                        Created = DateTime.Now,
+                        Name = action
+                    });
+                }
+
+                _unitOfWork.ActionStatus.AddRange(actionStatusItems);
+                _unitOfWork.Save();
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error when creating action status: " + ex.Message);
             }
         }
 

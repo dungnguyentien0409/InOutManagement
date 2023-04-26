@@ -12,11 +12,25 @@ namespace DataAccessEF.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ActionStatus",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActionStatus", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Door",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +43,7 @@ namespace DataAccessEF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -42,8 +56,8 @@ namespace DataAccessEF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HashedPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -75,6 +89,39 @@ namespace DataAccessEF.Migrations
                         name: "FK_DoorRole_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InOutHistory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DoorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ActionStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InOutHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InOutHistory_ActionStatus_ActionStatusId",
+                        column: x => x.ActionStatusId,
+                        principalTable: "ActionStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InOutHistory_Door_DoorId",
+                        column: x => x.DoorId,
+                        principalTable: "Door",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InOutHistory_UserInfo_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -116,6 +163,21 @@ namespace DataAccessEF.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InOutHistory_ActionStatusId",
+                table: "InOutHistory",
+                column: "ActionStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InOutHistory_DoorId",
+                table: "InOutHistory",
+                column: "DoorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InOutHistory_UserId",
+                table: "InOutHistory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRole_RoleId",
                 table: "UserRole",
                 column: "RoleId");
@@ -124,6 +186,30 @@ namespace DataAccessEF.Migrations
                 name: "IX_UserRole_UserInfoId",
                 table: "UserRole",
                 column: "UserInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserName",
+                table: "UserInfo",
+                column: "UserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleName",
+                table: "Role",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DoorName",
+                table: "Door",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActionStatusName",
+                table: "ActionStatus",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -133,7 +219,13 @@ namespace DataAccessEF.Migrations
                 name: "DoorRole");
 
             migrationBuilder.DropTable(
+                name: "InOutHistory");
+
+            migrationBuilder.DropTable(
                 name: "UserRole");
+
+            migrationBuilder.DropTable(
+                name: "ActionStatus");
 
             migrationBuilder.DropTable(
                 name: "Door");
