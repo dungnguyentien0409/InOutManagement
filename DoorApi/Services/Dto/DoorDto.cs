@@ -3,9 +3,8 @@ namespace Dto
 {
 	public class DoorDto
 	{
-		public DoorDto()
-		{
-		}
+		public Guid Id { get; set; }
+		public string Name { get; set; }
 	}
 }
 
