@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ViewModels
+namespace Dto
 {
-	public class DoorViewModel
+	public class RoleDto
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }
