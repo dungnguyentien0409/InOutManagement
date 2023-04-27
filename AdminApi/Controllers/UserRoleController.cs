@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Admin.Dto;
+using Common.AdminDto;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
 using AutoMapper;
@@ -11,8 +11,8 @@ namespace AdminApi.Controllers
     [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("admin/user-role")]
-    public class UserRoleController
-	{
+    public class UserRoleController : ControllerBase
+    {
         private readonly ILogger<UserRoleController> _logger;
         private readonly IMapper _mapper;
         private readonly IUserRoleService _userRoleService;

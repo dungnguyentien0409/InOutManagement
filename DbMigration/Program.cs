@@ -20,7 +20,11 @@ try
         context.Database.Migrate();
 
         var databaseService = new DatabaseService(context);
-        databaseService.CreateDefaultData();
+
+        if (bool.Parse(config.GetSection("CreateDefaultData").Value))
+        {
+            databaseService.CreateDefaultData();
+        }
 
         Console.WriteLine("Done migration with default user admin");
     }

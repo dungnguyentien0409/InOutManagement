@@ -19,8 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 builder.Services.AddTransient<IDoorService, DoorService>();
 builder.Services.AddTransient<IIotGatewayService, IotGatewayService>();
+builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
 builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
@@ -46,6 +47,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
             };
         });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+        });
+});
 
 var app = builder.Build();
 
@@ -59,7 +72,6 @@ if (app.Environment.IsDevelopment())
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
-    context.Database.Migrate();
 }
 
 app.UseHttpsRedirection();

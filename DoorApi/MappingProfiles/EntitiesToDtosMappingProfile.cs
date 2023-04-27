@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Entities;
-using Common.Door.Dto;
+using Common.DoorDto;
 
 namespace MappingProfiles
 {

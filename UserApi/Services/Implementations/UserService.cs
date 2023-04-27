@@ -1,7 +1,7 @@
 ﻿using System;
 using Interfaces;
 using Entities;
-using Common.User.Dto;
+using Common.UserDto;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

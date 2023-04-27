@@ -19,6 +19,16 @@ namespace DataAccessEF
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<UserInfo> UserInfos { get; set; }
 		public DbSet<UserInfoRole> UserInfoRoles { get; set; }
+		public DbSet<InOutHistory> InOutHistories { get; set; }
+		public DbSet<ActionStatus> ActionStatues { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=tcp:127.0.0.1,1441;Database=InOutManagement;User Id = SA;Password=MyPass@word;TrustServerCertificate=true");
+            }
+        }
     }
 }
 

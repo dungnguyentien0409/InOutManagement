@@ -1,8 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using Common.Admin.Dto;
+using Common.AdminDto;
 using ViewModels;
-using Common.Admin.Dto;
 
 namespace MappingProfiles
 {

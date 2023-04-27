@@ -5,6 +5,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
     <None Remove="appsettings.json" />
     <None Remove="appsettings.Development.json" />
     <None Remove="Services\" />
+    <None Remove="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json" Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'">
@@ -42,5 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
 </Project>

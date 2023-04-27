@@ -1,8 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using Entities;
-using Common.Door.Dto;
-using Common.Admin.Dto;
+using Common.DoorDto;
+using Common.AdminDto;
 
 namespace MappingProfiles
 {

@@ -3,8 +3,8 @@ using Interfaces;
 using ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using Common.User.Dto;
-using Common.Admin.Dto;
+using Common.UserDto;
+using Common.AdminDto;
 using Microsoft.AspNetCore.Authorization;
 
 namespace UserApi.Controllers
@@ -12,8 +12,8 @@ namespace UserApi.Controllers
     [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("admin/role")]
-    public class RoleController
-	{
+    public class RoleController : ControllerBase
+    {
 		IRoleService _roleService;
 		IMapper _mapper;
 		

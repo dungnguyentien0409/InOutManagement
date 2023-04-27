@@ -15,7 +15,7 @@ builder.Logging.AddConsole();
 // Add services to the container.
 builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
@@ -39,6 +39,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+        });
+});
 
 var app = builder.Build();
 

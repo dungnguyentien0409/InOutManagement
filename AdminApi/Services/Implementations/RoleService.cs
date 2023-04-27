@@ -1,6 +1,6 @@
 ﻿using System;
 using Interfaces;
-using Common.Admin.Dto;
+using Common.AdminDto;
 using Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;

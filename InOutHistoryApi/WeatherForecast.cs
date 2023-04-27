@@ -1,4 +1,4 @@
-﻿namespace AdminApi;
+﻿namespace InOutHistoryApi;
 
 public class WeatherForecast
 {

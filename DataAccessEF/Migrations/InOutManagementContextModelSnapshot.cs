@@ -22,7 +22,7 @@ namespace DataAccessEF.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.Door", b =>
+            modelBuilder.Entity("Entities.ActionStatus", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,31 @@ namespace DataAccessEF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ActionStatus");
+                });
+
+            modelBuilder.Entity("Entities.Door", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -64,6 +88,35 @@ namespace DataAccessEF.Migrations
                     b.ToTable("DoorRole");
                 });
 
+            modelBuilder.Entity("Entities.InOutHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActionStatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DoorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionStatusId");
+
+                    b.HasIndex("DoorId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InOutHistory");
+                });
+
             modelBuilder.Entity("Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -75,7 +128,8 @@ namespace DataAccessEF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -93,7 +147,8 @@ namespace DataAccessEF.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("HashedPassword")
                         .IsRequired()
@@ -105,7 +160,8 @@ namespace DataAccessEF.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -153,6 +209,33 @@ namespace DataAccessEF.Migrations
                     b.Navigation("Door");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Entities.InOutHistory", b =>
+                {
+                    b.HasOne("Entities.ActionStatus", "ActionStatus")
+                        .WithMany()
+                        .HasForeignKey("ActionStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Door", "Door")
+                        .WithMany()
+                        .HasForeignKey("DoorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.UserInfo", "UserInfo")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActionStatus");
+
+                    b.Navigation("Door");
+
+                    b.Navigation("UserInfo");
                 });
 
             modelBuilder.Entity("Entities.UserInfoRole", b =>

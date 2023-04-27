@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Common.Door.Dto
+namespace Common.DoorDto
 {
 	public class StatusDto
 	{
