@@ -15,7 +15,7 @@ builder.Logging.AddConsole();
 // Add services to the container.
 builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>

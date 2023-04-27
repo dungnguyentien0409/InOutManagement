@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["UserApi/UserApi.csproj", "UserApi/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["DataAccessEF/DataAccessEF.csproj", "DataAccessEF/"]
-RUN dotnet restore "../UserApi/UserApi.csproj"
+RUN dotnet restore "UserApi/UserApi.csproj"
 COPY . .
 WORKDIR "/src/UserApi"
 RUN dotnet build "UserApi.csproj" -c Release -o /app/build

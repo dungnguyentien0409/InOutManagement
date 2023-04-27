@@ -15,25 +15,31 @@ namespace Helper
             CreateActionStatus();
         }
 
-		public void CreateDummyData()
-		{
-            CreateDummyData("User");
-            CreateDummyData("Admin");
+        public void CreateDummyData()
+        {
+            var userNames = new string[] { "Normal User", "Admin User" };
+            var roleNames = new string[] { "User", "Admin" };
+            var doorNames = new string[] { "Front Door", "Storage" };
+
+            CreateDummyData(userNames, doorNames, roleNames);
 		}
 
-        private void CreateDummyData(string name)
+        private void CreateDummyData(string[] userNames, string[] doorNames, string[] roleNames)
         {
-            var roleId = CreateRole(name);
-            var userId = CreateUser(name);
-            var doorId = CreateDoor(name);
-
-            if (roleId.HasValue && userId.HasValue)
+            for (var i = 0; i < userNames.Length; i++)
             {
-                CreateUserRole(userId.Value, roleId.Value);
-            }
-            if (roleId.HasValue && userId.HasValue)
-            {
-                CreateDoorRole(doorId.Value, roleId.Value);
+                var userId = CreateUser(userNames[i]);
+                var doorId = CreateDoor(doorNames[i]);
+                var roleId = CreateRole(roleNames[i]);
+                
+                if (roleId.HasValue && userId.HasValue)
+                {
+                    CreateUserRole(userId.Value, roleId.Value);
+                }
+                if (roleId.HasValue && userId.HasValue)
+                {
+                    CreateDoorRole(doorId.Value, roleId.Value);
+                }
             }
         }
 

@@ -4,6 +4,7 @@ using AutoMapper;
 using Common.InOutHistoryDto;
 using Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InOutHistoryApi.Controllers
 {
@@ -25,6 +26,7 @@ namespace InOutHistoryApi.Controllers
 			_historyService = historyService;
 		}
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("")]
         public async Task<List<InOutHistoryDto>> GetInOutHistories(InOutHistoryRequest request)
 		{

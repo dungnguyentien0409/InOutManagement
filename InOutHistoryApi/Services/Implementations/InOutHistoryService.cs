@@ -58,15 +58,22 @@ namespace Implementations
 				return;
 			}
 
-			var history = new InOutHistory();
-			history.Id = Guid.NewGuid();
-			history.Created = DateTime.Now;
-			history.UserId = request.UserId.Value;
-			history.DoorId = request.DoorId.Value;
-			history.ActionStatusId = request.ActionStatusId.Value;
+			try
+			{
+				var history = new InOutHistory();
+				history.Id = Guid.NewGuid();
+				history.Created = DateTime.Now;
+				history.UserId = userItem.Id;
+				history.DoorId = doorItem.Id;
+				history.ActionStatusId = actionStatusItem.Id;
 
-			_unitOfWork.InOutHistory.Add(history);
-			_unitOfWork.Save();
+				_unitOfWork.InOutHistory.Add(history);
+				_unitOfWork.Save();
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error when write log: " + ex.Message);
+			}
 		}
 
         private async Task<(Door?, UserInfo?, ActionStatus?)> GetReferenceData(InOutHistoryRequest request)

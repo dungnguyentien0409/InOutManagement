@@ -10,6 +10,8 @@ services:
     build:
       context: .
       dockerfile: DoorApi/Dockerfile
+    ports:  
+      - '7053:7053'
     links:
       - sqldata
     depends_on:
@@ -23,6 +25,8 @@ services:
     build:
       context: .
       dockerfile: UserApi/Dockerfile
+    ports:  
+      - '7157:7157'
     links:
       - sqldata
     depends_on:
@@ -36,6 +40,8 @@ services:
     build:
       context: .
       dockerfile: AdminApi/Dockerfile
+    ports:  
+      - '7251:7251'
     links:
       - sqldata
     depends_on:
@@ -49,6 +55,21 @@ services:
     build:
       context: .
       dockerfile: InOutHistoryApi/Dockerfile
+    ports:  
+      - '7052:7052'
+    links:
+      - sqldata
+    depends_on:
+      sqldata:
+        condition: service_started
+    networks:
+      - myappnetwork
+
+  dbmigration:
+    image: ${DOCKER_REGISTRY-}dbmigration
+    build:
+      context: .
+      dockerfile: DbMigration/Dockerfile
     links:
       - sqldata
     depends_on:
@@ -74,3 +95,6 @@ services:
 
 
   
+
+  
+

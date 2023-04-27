@@ -8,7 +8,7 @@ var config = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-var connectionString = config.GetConnectionString("DefaultConnection");
+var connectionString = config.GetConnectionString("Connection");
 var contextOptions = new DbContextOptionsBuilder<InOutManagementContext>()
     .UseSqlServer(connectionString)
     .Options;
@@ -20,7 +20,11 @@ try
         context.Database.Migrate();
 
         var databaseService = new DatabaseService(context);
-        databaseService.CreateDefaultData();
+
+        if (bool.Parse(config.GetSection("CreateDefaultData").Value))
+        {
+            databaseService.CreateDefaultData();
+        }
 
         Console.WriteLine("Done migration with default user admin");
     }

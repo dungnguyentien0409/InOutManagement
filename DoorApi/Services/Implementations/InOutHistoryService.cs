@@ -38,23 +38,13 @@ namespace Implementations
                     return;
                 }
 
-
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://" + _config.GetValue<string>("Endpoints:HistoryApi") + "/");
                     client.DefaultRequestHeaders.Accept.Clear();
-
-                    // New code:
-                    var request = new InOutHistoryRequest();
-                    request.DoorId = dto.DoorId;
-                    request.UserId = dto.UserId;
-                    request.ActionStatusId = actionResult.Id;
-                    request.DoorName = dto.DoorName;
-                    request.UserName = dto.UserName;
-                    request.ActionStatusName = dto.TapAction;
-
-                    var requestString = JsonConvert.SerializeObject(request);
-                    HttpResponseMessage response = await client.PostAsJsonAsync("history/add", requestString);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+                    
+                    HttpResponseMessage response = await client.PostAsync("history/add", CreateContentRequest(dto));
 
                     if (!response.IsSuccessStatusCode)
                     {
@@ -66,6 +56,18 @@ namespace Implementations
             {
                 _logger.LogError("Issue when write to history: " + ex.Message);
             }
+        }
+
+        private FormUrlEncodedContent CreateContentRequest(TapDoorDto dto)
+        {
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("DoorName", dto.DoorName),
+                new KeyValuePair<string, string>("UserName", dto.UserName),
+                new KeyValuePair<string, string>("ActionStatusName", dto.TapAction)
+            });
+
+            return formContent;
         }
     }
 }

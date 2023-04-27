@@ -21,7 +21,7 @@ builder.Services.AddTransient<IDoorService, DoorService>();
 builder.Services.AddTransient<IIotGatewayService, IotGatewayService>();
 builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
 builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
@@ -72,7 +72,6 @@ if (app.Environment.IsDevelopment())
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
-    context.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
