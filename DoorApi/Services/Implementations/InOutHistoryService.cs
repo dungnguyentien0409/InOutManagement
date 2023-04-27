@@ -40,7 +40,7 @@ namespace Implementations
 
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://" + _config.GetValue<string>("Endpoints:HistoryApi") + "/");
+                    client.BaseAddress = new Uri(_config.GetValue<string>("Endpoints:HistoryApi"));
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
                     
