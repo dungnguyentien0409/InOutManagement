@@ -44,7 +44,7 @@ namespace Implementations
                 if (doorRoleItem != null)
                 {
                     _logger.LogError("This door role has already existed");
-                    return false;
+                    return true;
                 }
 
                 doorRoleItem = _mapper.Map<DoorRole>(doorRoleDto);

@@ -17,9 +17,9 @@ namespace Helper
 
         public void CreateDummyData()
         {
-            var userNames = new string[] { "Normal User", "Admin User" };
+            var userNames = new string[] { "NormalUser", "AdminUser" };
             var roleNames = new string[] { "User", "Admin" };
-            var doorNames = new string[] { "Front Door", "Storage" };
+            var doorNames = new string[] { "FrontDoor", "Storage" };
 
             CreateDummyData(userNames, doorNames, roleNames);
 		}

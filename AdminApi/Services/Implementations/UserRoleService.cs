@@ -41,6 +41,7 @@ namespace Implementations
                 if (userRole != null)
                 {
                     _logger.LogError("User has already had this role");
+                    return true;
                 }
 
                 userRole = new Entities.UserInfoRole();

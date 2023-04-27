@@ -8,6 +8,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using Common;
 
 namespace Implementations
 {
@@ -31,45 +33,66 @@ namespace Implementations
 
 		public bool SignUp(UserInfoDto userDto)
 		{
-			if (!VerifyUserInfo(userDto))
+			try
 			{
+				if (!VerifyUserInfo(userDto))
+				{
+					return false;
+				}
+
+				var userInfo = new UserInfo();
+				userInfo = _mapper.Map<UserInfo>(userDto);
+				userInfo.Id = Guid.NewGuid();
+				userInfo.Salt = Common.Helpers.PasswordHelper.GenerateSalt(SALT_SIZE);
+				userInfo.HashedPassword = Common.Helpers.PasswordHelper.HashPassword(userDto.Password, userInfo.Salt);
+
+				_unitOfWork.UserInfo.Add(userInfo);
+				_unitOfWork.Save();
+
+				AssignNormalUserRole(userInfo.Id);
+
+				return true;
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error when signup: " + ex.Message);
 				return false;
 			}
-
-			var userInfo = new UserInfo();
-			userInfo = _mapper.Map<UserInfo>(userDto);
-			userInfo.Id = Guid.NewGuid();
-			userInfo.Salt = Common.Helpers.PasswordHelper.GenerateSalt(SALT_SIZE);
-			userInfo.HashedPassword = Common.Helpers.PasswordHelper.HashPassword(userDto.Password, userInfo.Salt);
-
-			_unitOfWork.UserInfo.Add(userInfo);
-
-			_unitOfWork.Save();
-
-			return true;
 		}
 
 		public string SignIn(UserInfoDto userDto)
 		{
-			var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userDto.UserName).FirstOrDefault();
-
-			if (userItem == null
-				|| !Common.Helpers.PasswordHelper.VerifyPassword(userDto.Password, userItem.Salt, userItem.HashedPassword))
+			try
 			{
+				var userItem = _unitOfWork.UserInfo
+					.Find(f => f.UserName == userDto.UserName)
+					.FirstOrDefault();
+
+				if (userItem == null
+					|| !Common.Helpers.PasswordHelper.VerifyPassword(userDto.Password, userItem.Salt, userItem.HashedPassword))
+				{
+					return "";
+				}
+
+				var userRoleItem = _unitOfWork.UserInfoRole
+					.Find(f => f.UserInfoId == userItem.Id)
+					.FirstOrDefault();
+				if (userRoleItem == null)
+				{
+					_logger.LogError("This user does not have any role");
+					return "";
+				}
+
+				userDto.UserRole = GetRoleNameByUserId(userItem.Id);
+
+				return GenerateJwtToken(userDto);
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error when signin: " + ex.Message);
+
 				return "";
 			}
-
-            var userRoleItem = _unitOfWork.UserInfoRole.Find(f => f.UserInfoId == userItem.Id).FirstOrDefault();
-
-			if (userRoleItem == null)
-			{
-				_logger.LogError("This user does not have any role");
-				return "";
-			}
-
-			userDto.UserRole = userRoleItem.Role.Name;
-
-            return GenerateJwtToken(userDto);
 		}
 
 		private bool VerifyUserInfo(UserInfoDto userDto)
@@ -97,8 +120,7 @@ namespace Implementations
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userDto.UserName),
-				new Claim(ClaimTypes.Role, userDto.UserRole),
-				new Claim("Email", userDto.Email)
+				new Claim(ClaimTypes.Role, userDto.UserRole)
             };
 			var issuer = _config.GetValue<string>("Jwt:Issuer");
 			var audience = _config.GetValue<string>("Jwt:Audience");
@@ -141,5 +163,45 @@ namespace Implementations
             }
             return true;
         }
+
+		private void AssignNormalUserRole(Guid userId)
+		{
+			var normalRole = _unitOfWork.Role.Query().Where(w => w.Name == Constants.RoleName.NORMAL_USER)
+				.First();
+
+			if (normalRole == null) return;
+
+			var userRole = new UserInfoRole();
+			userRole.Id = Guid.NewGuid();
+			userRole.Created = DateTime.Now;
+			userRole.UserInfoId = userId;
+			userRole.RoleId = normalRole.Id;
+
+			_unitOfWork.UserInfoRole.Add(userRole);
+			_unitOfWork.Save();
+		}
+
+		private string GetRoleNameByUserId(Guid userId)
+		{
+			try
+			{
+				var roleId = _unitOfWork.UserInfoRole.Find(f => f.UserInfoId == userId)
+					.Select(s => s.RoleId)
+					.FirstOrDefault();
+
+				if (roleId == Guid.Empty) return "";
+
+				var roleName = _unitOfWork.Role.Find(f => f.Id == roleId)
+					.Select(s => s.Name)
+					.FirstOrDefault();
+
+				return roleName;
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error when get role for this user: " + ex.Message);
+				return "";
+			}
+		}
     }
 }

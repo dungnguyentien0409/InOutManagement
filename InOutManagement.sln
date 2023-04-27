@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbMigration", "DbMigration\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InOutHistoryApi", "InOutHistoryApi\InOutHistoryApi.csproj", "{74CA45F3-6C51-4440-BF0B-535DEBEA26B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{74CA45F3-6C51-4440-BF0B-535DEBEA26B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74CA45F3-6C51-4440-BF0B-535DEBEA26B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74CA45F3-6C51-4440-BF0B-535DEBEA26B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

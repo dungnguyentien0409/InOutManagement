@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ViewModels
+namespace Requests
 {
-	public class UserViewModel
+	public class SignupRequest
 	{
 		public Guid UserId { get; set; }
 		public string UserName { get; set; }

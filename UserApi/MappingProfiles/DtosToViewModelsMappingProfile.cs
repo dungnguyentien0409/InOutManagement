@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Common.UserDto;
-using ViewModels;
+using Requests;
 
 namespace MappingProfiles
 {
@@ -9,8 +9,9 @@ namespace MappingProfiles
 	{
 		public DtosToViewModelsMappingProfile()
 		{
-			CreateMap<UserInfoDto, UserViewModel>().ReverseMap();
-		}
+			CreateMap<UserInfoDto, SigninRequest>().ReverseMap();
+            CreateMap<UserInfoDto, SignupRequest>().ReverseMap();
+        }
 	}
 }
 
