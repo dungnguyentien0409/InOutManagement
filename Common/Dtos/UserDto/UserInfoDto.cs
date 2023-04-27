@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Common.User.Dto
+namespace Common.UserDto
 {
 	public class UserInfoDto
 	{

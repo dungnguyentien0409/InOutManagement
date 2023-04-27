@@ -1,15 +1,15 @@
 ﻿using System;
 using Interfaces;
-using Common.Door.Dto;
+using Common.DoorDto;
 
 namespace Implementations
 {
 	public class IotGatewayService : IIotGatewayService
     {
-		public void SendDoorStatus(DoorDto doorDto, StatusDto statusDto)
+		public async Task SendDoorStatus(TapDoorDto dto)
 		{
 			// Send to iot gateway endpoint
-			Console.Write(doorDto.Name + "\t" + statusDto.Name);
+			Console.Write(dto.UserName + "\t" + dto.DoorName);
 		}
     }
 }

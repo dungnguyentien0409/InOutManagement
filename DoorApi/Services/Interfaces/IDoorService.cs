@@ -1,11 +1,11 @@
 ﻿using System;
-using Common.Door.Dto;
+using Common.DoorDto;
 
 namespace Interfaces
 {
 	public interface IDoorService
 	{
-		public bool ValidOpen(DoorDto doorDto);
+		public Task<bool> Open(TapDoorDto doorDto);
 		public bool CreateDoor(DoorDto doorDto);
 		
 	}

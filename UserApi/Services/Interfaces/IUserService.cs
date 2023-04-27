@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.User.Dto;
+using Common.UserDto;
 
 namespace Interfaces
 {

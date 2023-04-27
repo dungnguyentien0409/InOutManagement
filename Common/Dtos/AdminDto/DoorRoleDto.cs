@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Common.Admin.Dto
+namespace Common.AdminDto
 {
 	public class DoorRoleDto
 	{

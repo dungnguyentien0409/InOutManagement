@@ -12,6 +12,9 @@
     <None Remove="Dtos\DoorDto\" />
     <None Remove="Dtos\AdminDto\" />
     <None Remove="Helpers\" />
+    <None Remove="Constants\" />
+    <None Remove="Dtos\InOutHistoryDto\" />
+    <None Remove="Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dtos\" />
@@ -19,5 +22,8 @@
     <Folder Include="Dtos\DoorDto\" />
     <Folder Include="Dtos\AdminDto\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Dtos\InOutHistoryDto\" />
+    <Folder Include="Request\" />
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 builder.Services.AddTransient<IDoorService, DoorService>();
 builder.Services.AddTransient<IIotGatewayService, IotGatewayService>();
+builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
 builder.Services.AddDbContext<InOutManagementContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -46,6 +47,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
             };
         });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+        });
+});
 
 var app = builder.Build();
 

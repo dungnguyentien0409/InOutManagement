@@ -1,8 +1,8 @@
 ﻿using System;
-using Common.Door.Dto;
+using Common.DoorDto;
 using ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Common.Admin.Dto;
+using Common.AdminDto;
 using AutoMapper;
 using Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -12,8 +12,8 @@ namespace AdminApi.Controllers
     [Authorize(Roles="Admin")]
     [ApiController]
     [Route("admin/door-role")]
-    public class DoorRoleController
-	{
+    public class DoorRoleController : ControllerBase
+    {
         private readonly IMapper _mapper;
         private ILogger<DoorRoleController> _logger;
         private IDoorRoleService _doorRoleService;

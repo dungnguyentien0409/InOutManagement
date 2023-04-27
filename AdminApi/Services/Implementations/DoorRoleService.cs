@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Admin.Dto;
+using Common.AdminDto;
 using Entities;
 using Interfaces;
 using AutoMapper;

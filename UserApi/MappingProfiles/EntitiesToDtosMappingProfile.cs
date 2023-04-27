@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Entities;
-using Common.User.Dto;
+using Common.UserDto;
 
 namespace MappingProfiles
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using Common.User.Dto;
+using Common.UserDto;
 using ViewModels;
 
 namespace MappingProfiles
