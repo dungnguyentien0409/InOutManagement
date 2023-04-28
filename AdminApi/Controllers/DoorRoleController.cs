@@ -1,6 +1,6 @@
 ﻿using System;
 using Common.DoorDto;
-using ViewModels;
+using Requests;
 using Microsoft.AspNetCore.Mvc;
 using Common.AdminDto;
 using AutoMapper;
@@ -26,7 +26,7 @@ namespace AdminApi.Controllers
 		}
 
         [HttpPost("assign")]
-        public bool AssignRole(DoorRoleViewModel viewModel)
+        public bool AssignRole(DoorRoleRequest viewModel)
         {
             var dto = _mapper.Map<DoorRoleDto>(viewModel);
 
@@ -34,7 +34,7 @@ namespace AdminApi.Controllers
         }
 
         [HttpPost("deassign")]
-        public bool DeassignRole(DoorRoleViewModel viewModel)
+        public bool DeassignRole(DoorRoleRequest viewModel)
         {
             var dto = _mapper.Map<DoorRoleDto>(viewModel);
 

@@ -23,14 +23,12 @@
     <None Remove="Services\" />
     <None Remove="Services\Interfaces\" />
     <None Remove="Services\Implementations\" />
-    <None Remove="ViewModels\" />
     <None Remove="MappingProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementations\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="MappingProfiles\" />
   </ItemGroup>
   <ItemGroup>

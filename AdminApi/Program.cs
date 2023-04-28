@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using DataAccessEF;
 using Implementations;
 using Interfaces;
@@ -27,10 +28,6 @@ builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(x =>
-{
-    x.TokenValidationParameters = new TokenValidationParameters();
 });
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IDoorRoleService, DoorRoleService>();
@@ -51,6 +48,20 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
         });
 });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+            };
+        });
 
 var app = builder.Build();
 
@@ -59,6 +70,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
+    Console.WriteLine("Admin API: " + context.Database.GetDbConnection().ConnectionString);
+    Console.WriteLine("Admin API connect db: " + context.Database.CanConnect());
 }
 
 app.UseHttpsRedirection();

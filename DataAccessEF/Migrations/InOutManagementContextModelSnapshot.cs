@@ -94,25 +94,28 @@ namespace DataAccessEF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ActionStatusId")
+                    b.Property<Guid?>("ActionStatusId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActionStatusName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DoorId")
+                    b.Property<Guid?>("DoorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<string>("DoorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ActionStatusId");
-
-                    b.HasIndex("DoorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("InOutHistory");
                 });
@@ -209,33 +212,6 @@ namespace DataAccessEF.Migrations
                     b.Navigation("Door");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Entities.InOutHistory", b =>
-                {
-                    b.HasOne("Entities.ActionStatus", "ActionStatus")
-                        .WithMany()
-                        .HasForeignKey("ActionStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Door", "Door")
-                        .WithMany()
-                        .HasForeignKey("DoorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.UserInfo", "UserInfo")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ActionStatus");
-
-                    b.Navigation("Door");
-
-                    b.Navigation("UserInfo");
                 });
 
             modelBuilder.Entity("Entities.UserInfoRole", b =>

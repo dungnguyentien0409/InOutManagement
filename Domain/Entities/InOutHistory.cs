@@ -6,17 +6,14 @@ namespace Entities
 	[Table("InOutHistory")]
 	public class InOutHistory : EntityBase
 	{
-		[ForeignKey("UserInfo")]
-		public Guid UserId { get; set; }
-		public virtual UserInfo? UserInfo { get; set; }
+		public Guid? UserId { get; set; }
+		public string? UserName { get; set; }
 
-		[ForeignKey("Door")]
-		public Guid DoorId { get; set; }
-		public virtual Door? Door { get; set; }
+		public Guid? DoorId { get; set; }
+		public string? DoorName { get; set; }
 
-        [ForeignKey("ActionStatus")]
-        public Guid ActionStatusId { get; set; }
-		public virtual ActionStatus? ActionStatus { get; set; }
+        public Guid? ActionStatusId { get; set; }
+		public string? ActionStatusName { get; set; }
 	}
 }
 

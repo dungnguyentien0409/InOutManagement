@@ -8,11 +8,11 @@ namespace Entities
 	{
 		[ForeignKey("UserInfo")]
 		public Guid UserInfoId { get; set; }
-		public virtual UserInfo? UserInfo { get; set; }
+		public virtual UserInfo UserInfo { get; set; }
 
 		[ForeignKey("Role")]
 		public Guid RoleId { get; set; }
-		public virtual Role? Role { get; set; }
+		public virtual Role Role { get; set; }
 	}
 }
 

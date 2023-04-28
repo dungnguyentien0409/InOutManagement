@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Common.AdminDto;
-using ViewModels;
+using Requests;
 
 namespace MappingProfiles
 {
@@ -9,8 +9,8 @@ namespace MappingProfiles
 	{
 		public DtosToViewModelsMappingProfile()
 		{
-            CreateMap<RoleDto, RoleViewModel>().ReverseMap();
-            CreateMap<UserInfoRoleDto, UserInfoRoleViewModel>().ReverseMap();
+            CreateMap<RoleDto, RoleRequest>().ReverseMap();
+            CreateMap<UserInfoRoleDto, UserInfoRoleRequest>().ReverseMap();
         }
 	}
 }

@@ -17,30 +17,32 @@ namespace Helper
 
         public void CreateDummyData()
         {
-            var userNames = new string[] { "Normal User", "Admin User" };
+            var userNames = new string[] { "NormalUser", "AdminUser" };
             var roleNames = new string[] { "User", "Admin" };
-            var doorNames = new string[] { "Front Door", "Storage" };
+            var doorNames = new string[] { "FrontDoor", "Storage" };
 
-            CreateDummyData(userNames, doorNames, roleNames);
-		}
+            var (normalUserId, normalRoleId, normalDoorId) = CreateDummyData("NormalUser", "User", "FrontDoor");
+            var (adminUserId, adminRoleId, adminDoorId) = CreateDummyData("AdminUser", "Admin", "StorageDoor");
 
-        private void CreateDummyData(string[] userNames, string[] doorNames, string[] roleNames)
+            CreateDoorRole(normalDoorId, adminRoleId);
+        }
+
+        private (Guid, Guid, Guid) CreateDummyData(string userName, string roleName, string doorName)
         {
-            for (var i = 0; i < userNames.Length; i++)
-            {
-                var userId = CreateUser(userNames[i]);
-                var doorId = CreateDoor(doorNames[i]);
-                var roleId = CreateRole(roleNames[i]);
+            var userId = CreateUser(userName);
+            var doorId = CreateDoor(doorName);
+            var roleId = CreateRole(roleName);
                 
-                if (roleId.HasValue && userId.HasValue)
-                {
-                    CreateUserRole(userId.Value, roleId.Value);
-                }
-                if (roleId.HasValue && userId.HasValue)
-                {
-                    CreateDoorRole(doorId.Value, roleId.Value);
-                }
+            if (roleId.HasValue && userId.HasValue)
+            {
+                CreateUserRole(userId.Value, roleId.Value);
             }
+            if (roleId.HasValue && userId.HasValue)
+            {
+                CreateDoorRole(doorId.Value, roleId.Value);
+            }
+
+            return (userId.Value, roleId.Value, doorId.Value);
         }
 
         private Guid? CreateRole(string roleName)

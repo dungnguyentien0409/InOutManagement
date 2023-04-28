@@ -6,6 +6,7 @@ using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Azure;
+using Common;
 
 namespace DoorApi.Controllers
 {
@@ -38,11 +39,24 @@ namespace DoorApi.Controllers
 
 				if (!_doorService.Open(dto).Result)
 				{
-					return false;
+					_logger.LogError("open success");
+					if (dto.TapAction == Constants.TapAction.TAPIN)
+					{
+                        dto.TapAction = Constants.TapAction.FAILED_TAPIN;
+                    }
+					else if (dto.TapAction == Constants.TapAction.TAPOUT)
+					{
+						dto.TapAction = Constants.TapAction.FAILED_TAPOUT;
+					}
+
+                    _historyService.SaveToHistory(dto);
+
+                    return false;
 				}
 
-				_iotGatewayService.SendDoorStatus(dto);
-				_historyService.SaveToHistory(dto);
+                _logger.LogError("open fail");
+                _iotGatewayService.SendDoorStatus(dto);
+                _historyService.SaveToHistory(dto);
 
                 return true;
 			}

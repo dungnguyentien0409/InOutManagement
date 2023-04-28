@@ -10,7 +10,6 @@ namespace MappingProfiles
 		public EntitiesToDtosMappingProfile()
 		{
 			CreateMap<UserInfo, UserInfoDto>().ReverseMap();
-			
 		}
 	}
 }

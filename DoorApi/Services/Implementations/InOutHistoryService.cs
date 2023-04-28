@@ -38,36 +38,26 @@ namespace Implementations
                     return;
                 }
 
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(_config.GetValue<string>("Endpoints:HistoryApi"));
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
-                    
-                    HttpResponseMessage response = await client.PostAsync("history/add", CreateContentRequest(dto));
+                var clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                var httpClient = new HttpClient(clientHandler);
+                var url = _config.GetValue<string>("Endpoints:HistoryApi") + "history/add";
+                var request = new InOutHistoryRequest();
+                request.DoorName = dto.DoorName;
+                request.UserName = dto.UserName;
+                request.ActionStatusName = dto.TapAction;
 
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        _logger.LogError("Failt to write to history");
-                    }
+                var response = httpClient.PostAsJsonAsync(url, request).Result;
+
+                if (response == null || !response.IsSuccessStatusCode)
+                {
+                    _logger.LogError("Failt to write to history");
                 }
             }
             catch(Exception ex)
             {
                 _logger.LogError("Issue when write to history: " + ex.Message);
             }
-        }
-
-        private FormUrlEncodedContent CreateContentRequest(TapDoorDto dto)
-        {
-            var formContent = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("DoorName", dto.DoorName),
-                new KeyValuePair<string, string>("UserName", dto.UserName),
-                new KeyValuePair<string, string>("ActionStatusName", dto.TapAction)
-            });
-
-            return formContent;
         }
     }
 }

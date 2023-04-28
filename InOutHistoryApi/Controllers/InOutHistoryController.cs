@@ -34,7 +34,7 @@ namespace InOutHistoryApi.Controllers
 		}
 
         [HttpPost("add")]
-        public async Task AddHistory([FromForm] InOutHistoryRequest request)
+        public async Task AddHistory(InOutHistoryRequest request)
 		{
 			_historyService.AddHistory(request);
 		}

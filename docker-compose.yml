@@ -5,13 +5,13 @@ networks:
     name: myappnetwork
 
 services:
-  doorapi:
-    image: ${DOCKER_REGISTRY-}doorapi
+  userapi:
+    image: ${DOCKER_REGISTRY-}userapi
     build:
       context: .
-      dockerfile: DoorApi/Dockerfile
+      dockerfile: UserApi/Dockerfile
     ports:  
-      - '7053:7053'
+      - '7157:443'
     links:
       - sqldata
     depends_on:
@@ -20,13 +20,13 @@ services:
     networks:
       - myappnetwork
 
-  userapi:
-    image: ${DOCKER_REGISTRY-}userapi
+  doorapi:
+    image: ${DOCKER_REGISTRY-}doorapi
     build:
       context: .
-      dockerfile: UserApi/Dockerfile
+      dockerfile: DoorApi/Dockerfile
     ports:  
-      - '7157:7157'
+      - "7053:443"
     links:
       - sqldata
     depends_on:
@@ -41,7 +41,7 @@ services:
       context: .
       dockerfile: AdminApi/Dockerfile
     ports:  
-      - '7251:7251'
+      - "7251:443"
     links:
       - sqldata
     depends_on:
@@ -56,7 +56,7 @@ services:
       context: .
       dockerfile: InOutHistoryApi/Dockerfile
     ports:  
-      - '7052:7052'
+      - '7052:443'
     links:
       - sqldata
     depends_on:

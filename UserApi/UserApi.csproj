@@ -24,20 +24,19 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" Version="7.0.0" />
     <PackageReference Include="MinimalApi.Endpoint" Version="1.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Services\" />
     <None Remove="Services\Interfaces\" />
     <None Remove="Services\Implementations\" />
-    <None Remove="ViewModels\" />
     <None Remove="MappingProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementations\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="MappingProfiles\" />
   </ItemGroup>
   <ItemGroup>

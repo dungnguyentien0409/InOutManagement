@@ -17,6 +17,8 @@ try
 {
     using (var context = new InOutManagementContext(contextOptions))
     {
+        Console.WriteLine("DB Migration connect db: " + context.Database.CanConnect());
+
         context.Database.Migrate();
 
         var databaseService = new DatabaseService(context);

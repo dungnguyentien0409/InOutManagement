@@ -1,6 +1,6 @@
 ﻿using System;
 using Interfaces;
-using ViewModels;
+using Requests;
 using AutoMapper;
 using Common.UserDto;
 using Microsoft.AspNetCore.Mvc;
@@ -21,25 +21,30 @@ namespace UserApi.Controllers
 		}
 
 		[HttpPost("signup")]
-		public bool SignUp(UserViewModel viewModel)
+		public IActionResult SignUp(SignupRequest viewModel)
 		{
 			var userDto = _mapper.Map<UserInfoDto>(viewModel);
 
 			if (!_userServices.SignUp(userDto))
 			{
-				return false;
+				return BadRequest();
 			}
 
-			return true;
+			return Ok(true);
 		}
 
         [HttpPost("signin")]
-        public string SignIn(UserViewModel viewModel)
+        public IActionResult SignIn(SigninRequest viewModel)
         {
             var userDto = _mapper.Map<UserInfoDto>(viewModel);
 			var jwtToken = _userServices.SignIn(userDto);
 
-            return jwtToken;
+			if (string.IsNullOrEmpty(jwtToken))
+			{
+				return BadRequest();
+			}
+
+            return Ok(jwtToken);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Implementations
 
 		public async Task<bool> Open(TapDoorDto dto)
 		{
+			_logger.LogError("Start to open");
             var doorItem = _unitOfWork.Door.Find(f => f.Name == dto.DoorName).FirstOrDefault();
             if (doorItem == null)
             {
@@ -45,6 +46,8 @@ namespace Implementations
                 _logger.LogError("User does not have access right to open the door");
                 return false;
             }
+
+			_logger.LogError("Finish open");
 
             return true;
         }
