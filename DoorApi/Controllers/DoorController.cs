@@ -40,10 +40,15 @@ namespace DoorApi.Controllers
 				if (!_doorService.Open(dto).Result)
 				{
 					_logger.LogError("open success");
-					dto.TapAction = string.IsNullOrEmpty(dto.TapAction) ? "" :
-						dto.TapAction == Constants.TapAction.TAPIN ? Constants.TapAction.FAILED_TAPIN :
-						dto.TapAction == Constants.TapAction.TAPOUT ? Constants.TapAction.FAILED_TAPOUT :
-						"";
+					if (dto.TapAction == Constants.TapAction.TAPIN)
+					{
+                        dto.TapAction = Constants.TapAction.FAILED_TAPIN;
+                    }
+					else if (dto.TapAction == Constants.TapAction.TAPOUT)
+					{
+						dto.TapAction = Constants.TapAction.FAILED_TAPOUT;
+					}
+
                     _historyService.SaveToHistory(dto);
 
                     return false;

@@ -4,6 +4,7 @@ using Interfaces;
 using AutoMapper;
 using Request;
 using Entities;
+using Common;
 
 namespace Implementations
 {
@@ -22,7 +23,7 @@ namespace Implementations
 
 		public async Task<List<InOutHistoryDto>> GetInOutHistories(InOutHistoryRequest request)
 		{
-            var (doorItem, userItem, actionStatusItem) = await GetReferenceData(request);
+			var (doorItem, userItem, actionStatusItem) = await GetReferenceData(request);
 			var query = _unitOfWork.InOutHistory.Query();
 
 			query = request.StartTime == null ? query :
@@ -39,9 +40,9 @@ namespace Implementations
 			var result = query.Select(s => new InOutHistoryDto
 			{
 				Id = s.Id,
-				ActionStatusId = s.ActionStatusId,
-				DoorId = s.DoorId,
-				UserId = s.UserId,
+				ActionStatusName = string.IsNullOrEmpty(s.ActionStatusName) ? "" : s.ActionStatusName,
+				DoorName = string.IsNullOrEmpty(s.DoorName) ? "" : s.DoorName,
+				UserName = string.IsNullOrEmpty(s.UserName) ? "" : s.UserName,
 				Created = s.Created
 			}).ToList();
 
@@ -66,14 +67,17 @@ namespace Implementations
 				history.UserId = userItem.Id;
 				history.DoorId = doorItem.Id;
 				history.ActionStatusId = actionStatusItem.Id;
+				history.UserName = request.UserName;
+				history.DoorName = request.DoorName;
+				history.ActionStatusName = request.ActionStatusName;
 
 				_unitOfWork.InOutHistory.Add(history);
 				_unitOfWork.Save();
-			}
+            }
 			catch(Exception ex)
 			{
 				_logger.LogError("Error when write log: " + ex.Message);
-			}
+            }
 		}
 
         private async Task<(Door?, UserInfo?, ActionStatus?)> GetReferenceData(InOutHistoryRequest request)
