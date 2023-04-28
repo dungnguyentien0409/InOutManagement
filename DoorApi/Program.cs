@@ -7,6 +7,7 @@ using MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MinimalApi.Endpoint.Configurations.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -15,13 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Configuration.AddConfigurationFile("appsettings.json");
+builder.Services.AddDbContext<InOutManagementContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
+);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 builder.Services.AddTransient<IDoorService, DoorService>();
 builder.Services.AddTransient<IIotGatewayService, IotGatewayService>();
 builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
-builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
-);
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
     mc.AddProfile(new DtosToViewModelsMappingProfile());
@@ -71,6 +73,8 @@ if (app.Environment.IsDevelopment())
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
+    Console.WriteLine("Door API: " + context.Database.GetDbConnection().ConnectionString);
+    Console.WriteLine("Door API connect db: " + context.Database.CanConnect());
 }
 
 app.UseHttpsRedirection();

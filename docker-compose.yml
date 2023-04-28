@@ -5,19 +5,6 @@ networks:
     name: myappnetwork
 
 services:
-  doorapi:
-    image: ${DOCKER_REGISTRY-}doorapi
-    build:
-      context: .
-      dockerfile: DoorApi/Dockerfile
-    ports:  
-      - "7053:443"
-    links:
-      - sqldata
-    depends_on:
-      sqldata:
-        condition: service_started
-
   userapi:
     image: ${DOCKER_REGISTRY-}userapi
     build:
@@ -25,6 +12,21 @@ services:
       dockerfile: UserApi/Dockerfile
     ports:  
       - '7157:443'
+    links:
+      - sqldata
+    depends_on:
+      sqldata:
+        condition: service_started
+    networks:
+      - myappnetwork
+
+  doorapi:
+    image: ${DOCKER_REGISTRY-}doorapi
+    build:
+      context: .
+      dockerfile: DoorApi/Dockerfile
+    ports:  
+      - "7053:443"
     links:
       - sqldata
     depends_on:

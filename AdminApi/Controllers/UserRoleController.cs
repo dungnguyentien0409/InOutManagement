@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.AdminDto;
 using Microsoft.AspNetCore.Mvc;
-using ViewModels;
+using Requests;
 using AutoMapper;
 using Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +25,7 @@ namespace AdminApi.Controllers
 		}
 
         [HttpPost("assign")]
-        public bool AssignRole(UserInfoRoleViewModel userRoleViewModel)
+        public bool AssignRole(UserInfoRoleRequest userRoleViewModel)
         {
             var userRoleDto = _mapper.Map<UserInfoRoleDto>(userRoleViewModel);
             var result = _userRoleService.AssignRole(userRoleDto);
@@ -34,7 +34,7 @@ namespace AdminApi.Controllers
         }
 
         [HttpPost("deassign")]
-        public bool DeassignRole(UserInfoRoleViewModel userRoleViewModel)
+        public bool DeassignRole(UserInfoRoleRequest userRoleViewModel)
         {
             var userRoleDto = _mapper.Map<UserInfoRoleDto>(userRoleViewModel);
             var result = _userRoleService.DeassignRole(userRoleDto);

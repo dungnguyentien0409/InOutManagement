@@ -1,6 +1,6 @@
 ﻿using System;
 using Interfaces;
-using ViewModels;
+using Requests;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Common.UserDto;
@@ -24,7 +24,7 @@ namespace UserApi.Controllers
 		}
 
         [HttpPost("create")]
-        public bool CreateRole(RoleViewModel roleViewModel)
+        public bool CreateRole(RoleRequest roleViewModel)
 		{
 			var roleDto = _mapper.Map<RoleDto>(roleViewModel);
 			var result = _roleService.CreateRole(roleDto);

@@ -72,6 +72,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
+    Console.WriteLine("Admin API: " + context.Database.GetDbConnection().ConnectionString);
+    Console.WriteLine("Admin API connect db: " + context.Database.CanConnect());
+}
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

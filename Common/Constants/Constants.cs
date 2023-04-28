@@ -7,6 +7,8 @@ namespace Common
 		{
 			public const string TAPIN = "TAP_IN";
 			public const string TAPOUT = "TAP_OUT";
+			public const string FAILED_TAPIN = "FAILED_TAPIN";
+			public const string FAILED_TAPOUT = "FAILED_TAPOUT";
 		}
 		public static class RoleName
 		{
