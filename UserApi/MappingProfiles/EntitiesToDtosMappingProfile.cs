@@ -3,7 +3,7 @@ using AutoMapper;
 using Entities;
 using Common.UserDto;
 
-namespace MappingProfiles
+namespace UserApi.MappingProfiles
 {
 	public class EntitiesToDtosMappingProfile : Profile
 	{
