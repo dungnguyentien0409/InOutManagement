@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
+using UserApi.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 

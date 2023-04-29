@@ -15,6 +15,26 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\DataAccessEF\DataAccessEF.csproj" />
+    <ProjectReference Include="..\AdminApi\AdminApi.csproj" />
+    <ProjectReference Include="..\DbMigration\DbMigration.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DoorApi\DoorApi.csproj" />
+    <ProjectReference Include="..\InOutHistoryApi\InOutHistoryApi.csproj" />
+    <ProjectReference Include="..\UserApi\UserApi.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="UserApi\" />
+    <None Remove="UserApi\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserApi\" />
+    <Folder Include="UserApi\Services\" />
+  </ItemGroup>
 </Project>

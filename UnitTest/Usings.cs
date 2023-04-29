@@ -1,1 +1,10 @@
 ﻿global using NUnit.Framework;
+global using System;
+global using Newtonsoft.Json;
+global using Moq;
+global using Common;
+global using Interfaces;
+global using Implementations;
+global using Microsoft.Extensions.Logging;
+global using AutoMapper;
+global using Entities;

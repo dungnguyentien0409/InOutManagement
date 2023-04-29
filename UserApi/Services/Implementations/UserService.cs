@@ -64,8 +64,8 @@ namespace Implementations
 		{
 			try
 			{
-				var userItem = _unitOfWork.UserInfo
-					.Find(f => f.UserName == userDto.UserName)
+				var userItem = _unitOfWork.UserInfo.Query()
+					.Where(w => w.UserName == userDto.UserName)
 					.FirstOrDefault();
 
 				if (userItem == null
@@ -74,8 +74,8 @@ namespace Implementations
 					return "";
 				}
 
-				var userRoleItem = _unitOfWork.UserInfoRole
-					.Find(f => f.UserInfoId == userItem.Id)
+				var userRoleItem = _unitOfWork.UserInfoRole.Query()
+					.Where(w => w.UserInfoId == userItem.Id)
 					.FirstOrDefault();
 				if (userRoleItem == null)
 				{
@@ -166,8 +166,10 @@ namespace Implementations
 
 		private void AssignNormalUserRole(Guid userId)
 		{
-			var normalRole = _unitOfWork.Role.Query().Where(w => w.Name == Constants.RoleName.NORMAL_USER)
-				.First();
+			var normalRole = _unitOfWork.Role.Query()
+				.Where(w => w.Name == Constants.RoleName.NORMAL_USER)
+				.ToList()
+				.FirstOrDefault();
 
 			if (normalRole == null) return;
 
@@ -185,13 +187,16 @@ namespace Implementations
 		{
 			try
 			{
-				var roleId = _unitOfWork.UserInfoRole.Find(f => f.UserInfoId == userId)
+				var tmp = _unitOfWork.UserInfoRole.Query();
+				var roleId = _unitOfWork.UserInfoRole.Query()
+					.Where(w => w.UserInfoId == userId)
 					.Select(s => s.RoleId)
 					.FirstOrDefault();
 
 				if (roleId == Guid.Empty) return "";
 
-				var roleName = _unitOfWork.Role.Find(f => f.Id == roleId)
+				var roleName = _unitOfWork.Role.Query()
+					.Where(w => w.Id == roleId)
 					.Select(s => s.Name)
 					.FirstOrDefault();
 
