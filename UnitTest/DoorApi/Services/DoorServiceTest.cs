@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.DoorDto;
 using DoorApi.MappingProfiles;
+using DoorApi.Implementations;
 
 namespace UnitTest.DoorApi.Services
 {

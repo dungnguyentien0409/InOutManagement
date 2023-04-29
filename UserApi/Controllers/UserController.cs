@@ -1,5 +1,5 @@
 ﻿using System;
-using Interfaces;
+using UserApi.Interfaces;
 using Requests;
 using AutoMapper;
 using Common.UserDto;

@@ -4,7 +4,7 @@ using Requests;
 using Microsoft.AspNetCore.Mvc;
 using Common.AdminDto;
 using AutoMapper;
-using Interfaces;
+using AdminApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AdminApi.Controllers

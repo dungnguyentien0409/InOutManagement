@@ -4,6 +4,7 @@ using Common.UserDto;
 using UserApi.MappingProfiles;
 using System.Text;
 using System.Linq.Expressions;
+using UserApi.Implementations;
 
 namespace UnitTest.UserApi.Services
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using Interfaces;
+using AdminApi.Interfaces;
 using Requests;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;

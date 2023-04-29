@@ -1,12 +1,13 @@
 ﻿using System;
 using Common.InOutHistoryDto;
-using Interfaces;
+using Domain.Interfaces;
+using HistoryApi.Interfaces;
 using AutoMapper;
 using Request;
 using Entities;
 using Common;
 
-namespace Implementations
+namespace HistoryApi.Implementations
 {
 	public class InOutHistoryService : IInOutHistoryService
     {

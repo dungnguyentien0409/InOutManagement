@@ -1,8 +1,8 @@
 ﻿using System;
-using Interfaces;
+using DoorApi.Interfaces;
 using Common.DoorDto;
 
-namespace Implementations
+namespace DoorApi.Implementations
 {
 	public class IotGatewayService : IIotGatewayService
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using AdminApi.MappingProfiles;
 using Common.AdminDto;
+using AdminApi.Implementations;
 
 namespace UnitTest.AdminApi.Services
 {

@@ -1,12 +1,13 @@
 ﻿using System;
 using Common.AdminDto;
 using Entities;
-using Interfaces;
+using Domain.Interfaces;
+using AdminApi.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 
-namespace Implementations
+namespace AdminApi.Implementations
 {
     [Authorize(Roles = "Admin")]
     public class DoorRoleService : IDoorRoleService

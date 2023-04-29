@@ -1,12 +1,14 @@
 ﻿using DataAccessEF;
-using Interfaces;
+using HistoryApi.Interfaces;
+using Domain.Interfaces;
+using DataAccessEF.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using AutoMapper;
-using MappingProfiles;
-using Implementations;
+using HistoryApi.MappingProfiles;
+using HistoryApi.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,7 +25,7 @@ builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {

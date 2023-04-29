@@ -1,10 +1,11 @@
 ﻿using System;
-using Interfaces;
+using Domain.Interfaces;
+using DoorApi.Interfaces;
 using Entities;
 using AutoMapper;
 using Common.DoorDto;
 
-namespace Implementations
+namespace DoorApi.Implementations
 {
 	public class DoorService : IDoorService
 	{

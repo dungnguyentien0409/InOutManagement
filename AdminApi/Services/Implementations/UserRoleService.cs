@@ -1,9 +1,10 @@
 ﻿using System;
 using Common.AdminDto;
-using Interfaces;
+using Domain.Interfaces;
+using AdminApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Implementations
+namespace AdminApi.Implementations
 {
     [Authorize(Roles = "Admin")]
     public class UserRoleService : IUserRoleService

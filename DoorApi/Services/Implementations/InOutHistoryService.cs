@@ -1,13 +1,14 @@
 ﻿using System;
 using Common.DoorDto;
-using Interfaces;
+using Domain.Interfaces;
+using DoorApi.Interfaces;
 using AutoMapper;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Request;
 using Newtonsoft.Json;
 
-namespace Implementations
+namespace DoorApi.Implementations
 {
 	public class InOutHistoryService : IInOutHistoryService
 	{

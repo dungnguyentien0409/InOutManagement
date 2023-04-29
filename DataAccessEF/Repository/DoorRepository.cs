@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection.PortableExecutable;
 using Entities;
-using Interfaces;
+using Domain.Interfaces;
 
 namespace DataAccessEF.Repository
 {

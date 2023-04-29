@@ -2,7 +2,8 @@
 using AutoMapper;
 using Requests;
 using Common.DoorDto;
-using Interfaces;
+using Domain.Interfaces;
+using DoorApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Azure;

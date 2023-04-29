@@ -1,7 +1,7 @@
 ﻿using System;
 using Entities;
 
-namespace Interfaces
+namespace Domain.Interfaces
 {
 	public interface IDoorRepository : IGenericRepository<Door>
 	{

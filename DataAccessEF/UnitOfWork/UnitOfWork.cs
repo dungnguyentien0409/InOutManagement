@@ -1,10 +1,10 @@
 ﻿using System;
 using DataAccessEF;
 using DataAccessEF.Repository;
-using Interfaces;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace UnitOfWork
+namespace DataAccessEF.UnitOfWork
 {
 	public class UnitOfWork : IUnitOfWork
 	{

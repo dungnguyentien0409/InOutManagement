@@ -36,6 +36,8 @@
     <None Remove="DoorApi\Services\" />
     <None Remove="AdminApi\" />
     <None Remove="AdminApi\Services\" />
+    <None Remove="InOutHistoryApi\" />
+    <None Remove="InOutHistoryApi\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UserApi\" />
@@ -44,5 +46,7 @@
     <Folder Include="DoorApi\Services\" />
     <Folder Include="AdminApi\" />
     <Folder Include="AdminApi\Services\" />
+    <Folder Include="InOutHistoryApi\" />
+    <Folder Include="InOutHistoryApi\Services\" />
   </ItemGroup>
 </Project>
