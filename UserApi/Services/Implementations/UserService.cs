@@ -1,5 +1,6 @@
 ﻿using System;
-using Interfaces;
+using Domain.Interfaces;
+using UserApi.Interfaces;
 using Entities;
 using Common.UserDto;
 using AutoMapper;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Common;
 
-namespace Implementations
+namespace UserApi.Implementations
 {
 	public class UserService : IUserService
 	{
@@ -102,7 +103,8 @@ namespace Implementations
 				return false;
 			}
 
-			var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userDto.UserName).FirstOrDefault();
+			var userItem = _unitOfWork.UserInfo.Query()
+				.Where(w => w.UserName == userDto.UserName).FirstOrDefault();
 
 			if (userItem != null)
 			{

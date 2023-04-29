@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.UserDto;
 
-namespace Interfaces
+namespace UserApi.Interfaces
 {
 	public interface IUserService
 	{

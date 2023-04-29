@@ -3,7 +3,7 @@ using AutoMapper;
 using Common.UserDto;
 using Requests;
 
-namespace MappingProfiles
+namespace UserApi.MappingProfiles
 {
 	public class DtosToViewModelsMappingProfile : Profile
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Entities;
-using Interfaces;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessEF
@@ -22,10 +22,6 @@ namespace DataAccessEF
         public void AddRange(IEnumerable<T> entities)
         {
             context.Set<T>().AddRange(entities);
-        }
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-        {
-            return context.Set<T>().Where(expression);
         }
         public IQueryable<T> Query()
         {

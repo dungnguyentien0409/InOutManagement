@@ -1,9 +1,10 @@
 ﻿using System;
 using Common.AdminDto;
-using Interfaces;
+using Domain.Interfaces;
+using AdminApi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Implementations
+namespace AdminApi.Implementations
 {
     [Authorize(Roles = "Admin")]
     public class UserRoleService : IUserRoleService
@@ -21,8 +22,10 @@ namespace Implementations
         {
             try
             {
-                var roleItem = _unitOfWork.Role.Find(f => f.Name == userInfoRoleDto.RoleName).FirstOrDefault();
-                var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userInfoRoleDto.UserName).FirstOrDefault();
+                var roleItem = _unitOfWork.Role.Query()
+                    .Where(w => w.Name == userInfoRoleDto.RoleName).FirstOrDefault();
+                var userItem = _unitOfWork.UserInfo.Query()
+                    .Where(w => w.UserName == userInfoRoleDto.UserName).FirstOrDefault();
 
                 if (roleItem == null)
                 {
@@ -35,13 +38,14 @@ namespace Implementations
                     return false;
                 }
 
-                var userRole = _unitOfWork.UserInfoRole.Find(f => f.RoleId == roleItem.Id && f.UserInfoId == userItem.Id)
+                var userRole = _unitOfWork.UserInfoRole.Query()
+                    .Where(w => w.RoleId == roleItem.Id && w.UserInfoId == userItem.Id)
                     .FirstOrDefault();
 
                 if (userRole != null)
                 {
                     _logger.LogError("User has already had this role");
-                    return true;
+                    return false;
                 }
 
                 userRole = new Entities.UserInfoRole();
@@ -66,8 +70,10 @@ namespace Implementations
         {
             try
             {
-                var roleItem = _unitOfWork.Role.Find(f => f.Name == userInfoRoleDto.RoleName).FirstOrDefault();
-                var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userInfoRoleDto.UserName).FirstOrDefault();
+                var roleItem = _unitOfWork.Role.Query()
+                    .Where(w => w.Name == userInfoRoleDto.RoleName).FirstOrDefault();
+                var userItem = _unitOfWork.UserInfo.Query()
+                    .Where(w => w.UserName == userInfoRoleDto.UserName).FirstOrDefault();
 
                 if (roleItem == null)
                 {
@@ -80,12 +86,14 @@ namespace Implementations
                     return false;
                 }
 
-                var userRole = _unitOfWork.UserInfoRole.Find(f => f.RoleId == roleItem.Id && f.UserInfoId == userItem.Id)
+                var userRole = _unitOfWork.UserInfoRole.Query()
+                    .Where(f => f.RoleId == roleItem.Id && f.UserInfoId == userItem.Id)
                     .FirstOrDefault();
 
                 if (userRole == null)
                 {
                     _logger.LogError("User does not have this role");
+                    return false;
                 }
 
                 _unitOfWork.UserInfoRole.Remove(userRole);

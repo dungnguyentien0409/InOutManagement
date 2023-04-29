@@ -1,12 +1,13 @@
-﻿using Interfaces;
+﻿using UserApi.Interfaces;
+using Domain.Interfaces;
+using DataAccessEF.UnitOfWork;
 using DataAccessEF;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
-using Implementations;
+using UserApi.Implementations;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -21,9 +22,9 @@ builder.Logging.AddConsole();
 // Add services to the container.
 builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddControllers();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>

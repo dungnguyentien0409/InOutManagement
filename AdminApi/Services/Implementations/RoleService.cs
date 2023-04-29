@@ -1,12 +1,13 @@
 ﻿using System;
-using Interfaces;
+using Domain.Interfaces;
+using AdminApi.Interfaces;
 using Common.AdminDto;
 using Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 
-namespace Implementations
+namespace AdminApi.Implementations
 {
     [Authorize(Roles = "Admin")]
     public class RoleService : IRoleService
@@ -24,7 +25,9 @@ namespace Implementations
 
         public bool CreateRole(RoleDto roleDto)
 		{
-			var roleItem = _unitOfWork.Role.Find(w => w.Name == roleDto.Name).FirstOrDefault();
+			var roleItem = _unitOfWork.Role.Query()
+				.Where(w => w.Name == roleDto.Name)
+				.FirstOrDefault();
 
 			if (roleItem != null)
 			{

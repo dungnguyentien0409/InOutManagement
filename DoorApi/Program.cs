@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using AutoMapper;
 using DataAccessEF;
-using Implementations;
-using Interfaces;
-using MappingProfiles;
+using DataAccessEF.UnitOfWork;
+using Domain.Interfaces;
+using DoorApi.Interfaces;
+using DoorApi.Implementations;
+using DoorApi.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +22,7 @@ builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IDoorService, DoorService>();
 builder.Services.AddTransient<IIotGatewayService, IotGatewayService>();
 builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();

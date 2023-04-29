@@ -1,12 +1,13 @@
 ﻿using System;
 using Common.InOutHistoryDto;
-using Interfaces;
+using Domain.Interfaces;
+using HistoryApi.Interfaces;
 using AutoMapper;
 using Request;
 using Entities;
 using Common;
 
-namespace Implementations
+namespace HistoryApi.Implementations
 {
 	public class InOutHistoryService : IInOutHistoryService
     {
@@ -86,13 +87,16 @@ namespace Implementations
 			try
 			{
 				var doorItem = !string.IsNullOrEmpty(request.DoorName) ?
-					_unitOfWork.Door.Find(w => w.Name == request.DoorName)
+					_unitOfWork.Door.Query()
+					.Where(w => w.Name == request.DoorName)
 					.FirstOrDefault() : null;
 				var userItem = !string.IsNullOrEmpty(request.UserName) ?
-					_unitOfWork.UserInfo.Find(w => !string.IsNullOrEmpty(request.UserName) && w.UserName == request.UserName)
+					_unitOfWork.UserInfo.Query()
+					.Where(w => !string.IsNullOrEmpty(request.UserName) && w.UserName == request.UserName)
 					.FirstOrDefault() : null;
 				var actionStatusItem = !string.IsNullOrEmpty(request.ActionStatusName) ?
-					_unitOfWork.ActionStatus.Find(w => w.Name == request.ActionStatusName)
+					_unitOfWork.ActionStatus.Query()
+					.Where(w => w.Name == request.ActionStatusName)
 					.FirstOrDefault() : null;
 
 				return (doorItem, userItem, actionStatusItem);

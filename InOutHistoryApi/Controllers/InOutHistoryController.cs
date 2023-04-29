@@ -1,5 +1,6 @@
 ﻿using System;
-using Interfaces;
+using Domain.Interfaces;
+using HistoryApi.Interfaces;
 using AutoMapper;
 using Common.InOutHistoryDto;
 using Request;

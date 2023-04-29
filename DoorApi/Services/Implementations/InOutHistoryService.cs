@@ -1,13 +1,14 @@
 ﻿using System;
 using Common.DoorDto;
-using Interfaces;
+using Domain.Interfaces;
+using DoorApi.Interfaces;
 using AutoMapper;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Request;
 using Newtonsoft.Json;
 
-namespace Implementations
+namespace DoorApi.Implementations
 {
 	public class InOutHistoryService : IInOutHistoryService
 	{
@@ -29,7 +30,8 @@ namespace Implementations
 		{
             try
             {
-                var actionResult = _unitOfWork.ActionStatus.Find(f => f.Name == dto.TapAction)
+                var actionResult = _unitOfWork.ActionStatus.Query()
+                    .Where(w => w.Name == dto.TapAction)
                     .FirstOrDefault();
 
                 if (actionResult == null)

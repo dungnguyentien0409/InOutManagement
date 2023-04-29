@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.AdminDto;
 
-namespace Interfaces
+namespace AdminApi.Interfaces
 {
 	public interface IRoleService
 	{

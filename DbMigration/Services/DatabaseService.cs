@@ -1,6 +1,7 @@
 ﻿using System;
 using DataAccessEF;
-using Interfaces;
+using Domain.Interfaces;
+using DataAccessEF.UnitOfWork;
 using Entities;
 using Common.Helpers;
 using Helper;
@@ -15,7 +16,7 @@ namespace Services
 		public DatabaseService(InOutManagementContext context)
 		{
 			_context = context;
-			_unitOfWork = new UnitOfWork.UnitOfWork(context);
+			_unitOfWork = new UnitOfWork(context);
 		}
 
         public void CreateDefaultData()

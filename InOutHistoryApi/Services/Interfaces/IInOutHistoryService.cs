@@ -2,7 +2,7 @@
 using Common.InOutHistoryDto;
 using Request;
 
-namespace Interfaces
+namespace HistoryApi.Interfaces
 {
 	public interface IInOutHistoryService
 	{

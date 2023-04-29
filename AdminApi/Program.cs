@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using AutoMapper;
 using DataAccessEF;
-using Implementations;
-using Interfaces;
-using MappingProfiles;
+using DataAccessEF.UnitOfWork;
+using Domain.Interfaces;
+using AdminApi.Interfaces;
+using AdminApi.Implementations;
+using AdminApi.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +20,7 @@ builder.Configuration.AddConfigurationFile("appsettings.json");
 builder.Services.AddDbContext<InOutManagementContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
     mc.AddProfile(new DtosToViewModelsMappingProfile());

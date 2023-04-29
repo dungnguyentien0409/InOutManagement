@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Helpers;
 using Entities;
-using Interfaces;
+using Domain.Interfaces;
 
 namespace Helper
 {

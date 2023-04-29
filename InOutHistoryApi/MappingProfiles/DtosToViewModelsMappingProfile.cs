@@ -2,7 +2,7 @@
 using AutoMapper;
 using Common.DoorDto;
 
-namespace MappingProfiles
+namespace HistoryApi.MappingProfiles
 {
 	public class DtosToViewModelsMappingProfile : Profile
 	{

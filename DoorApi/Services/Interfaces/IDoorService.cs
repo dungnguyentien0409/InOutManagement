@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.DoorDto;
 
-namespace Interfaces
+namespace DoorApi.Interfaces
 {
 	public interface IDoorService
 	{

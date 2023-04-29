@@ -4,15 +4,16 @@ using Entities;
 using Common.DoorDto;
 using Common.AdminDto;
 
-namespace MappingProfiles
+namespace AdminApi.MappingProfiles
 {
 	public class EntitiesToDtosMappingProfile : Profile
 	{
 		public EntitiesToDtosMappingProfile()
 		{
-			CreateMap<Entities.Door, DoorDto>().ReverseMap();
+			CreateMap<Door, DoorDto>().ReverseMap();
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<UserInfoRole, UserInfoRoleDto>().ReverseMap();
+			CreateMap<DoorRole, DoorRoleDto>().ReverseMap();
         }
 	}
 }
