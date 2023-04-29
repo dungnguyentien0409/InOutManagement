@@ -77,6 +77,8 @@ namespace UnitTest.AdminApi.Services
         [Test]
         [TestCase("NormalUser", "User", false)]
         [TestCase("AdminUser", "User", true)]
+        [TestCase("NonExistUser", "User", false)]
+        [TestCase("NormalUser", "NonExistRole", false)]
         public void AssignUserRoleTest(string userName, string roleName, bool check)
         {
             var dto = new UserInfoRoleDto
@@ -86,6 +88,24 @@ namespace UnitTest.AdminApi.Services
             };
 
             var result = _userRoleService.AssignRole(dto);
+
+            Assert.That(result, Is.EqualTo(check));
+        }
+
+        [Test]
+        [TestCase("NormalUser", "User", true)]
+        [TestCase("NormalUser", "Admin", false)]
+        [TestCase("NonExistUser", "User", false)]
+        [TestCase("NormalUser", "NonExistRole", false)]
+        public void DeassignUserRoleTest(string userName, string roleName, bool check)
+        {
+            var dto = new UserInfoRoleDto
+            {
+                UserName = userName,
+                RoleName = roleName
+            };
+
+            var result = _userRoleService.DeassignRole(dto);
 
             Assert.That(result, Is.EqualTo(check));
         }

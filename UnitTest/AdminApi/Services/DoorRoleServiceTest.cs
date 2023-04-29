@@ -101,6 +101,24 @@ namespace UnitTest.AdminApi.Services
 
             Assert.That(result, Is.EqualTo(check));
         }
+
+        [Test]
+        [TestCase("FrontDoor", "User", true)]
+        [TestCase("StorageDoor", "User", false)]
+        [TestCase("NonExistDoor", "User", false)]
+        [TestCase("FrontDoor", "NonExistUser", false)]
+        public void DeassignDoorRoleTest(string doorName, string roleName, bool check)
+        {
+            var dto = new DoorRoleDto
+            {
+                DoorName = doorName,
+                RoleName = roleName
+            };
+
+            var result = _doorRoleService.DeassignDoorRole(dto);
+
+            Assert.That(result, Is.EqualTo(check));
+        }
     }
 }
 
