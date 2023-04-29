@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ViewModels
+namespace Requests
 {
-	public class DoorViewModel
+	public class DoorRequest
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

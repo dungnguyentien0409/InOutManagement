@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Common.DoorDto;
-using ViewModels;
+using Requests;
 
 namespace MappingProfiles
 {
@@ -9,8 +9,8 @@ namespace MappingProfiles
 	{
 		public DtosToViewModelsMappingProfile()
 		{
-			CreateMap<DoorDto, DoorViewModel>().ReverseMap();
-			CreateMap<TapDoorDto, TapDoorViewModel>().ReverseMap();
+			CreateMap<DoorDto, DoorRequest>().ReverseMap();
+			CreateMap<TapDoorDto, TapDoorRequest>().ReverseMap();
 		}
 	}
 }

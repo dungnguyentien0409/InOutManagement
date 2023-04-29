@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using ViewModels;
+using Requests;
 using Common.DoorDto;
 using Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +31,11 @@ namespace DoorApi.Controllers
 		}
 
 		[HttpPost("open")]
-		public async Task<bool> Open(TapDoorViewModel viewModel)
+		public async Task<bool> Open(TapDoorRequest request)
 		{
 			try
 			{
-				var dto = _mapper.Map<TapDoorDto>(viewModel);
+				var dto = _mapper.Map<TapDoorDto>(request);
 
 				if (!_doorService.Open(dto).Result)
 				{
@@ -69,11 +69,11 @@ namespace DoorApi.Controllers
 		}
 
         [HttpPost("create")]
-        public bool Create(DoorViewModel viewModel)
+        public bool Create(DoorRequest request)
         {
 			try
 			{
-				var dto = _mapper.Map<DoorDto>(viewModel);
+				var dto = _mapper.Map<DoorDto>(request);
 
 				return _doorService.CreateDoor(dto);
 			}

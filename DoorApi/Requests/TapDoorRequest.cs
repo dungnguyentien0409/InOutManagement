@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ViewModels
+namespace Requests
 {
-	public class TapDoorViewModel
+	public class TapDoorRequest
 	{
 		public Guid? Id { get; set; }
 		public Guid? DoorId { get; set; }

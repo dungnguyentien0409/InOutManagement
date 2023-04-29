@@ -37,7 +37,8 @@ namespace Implementations
 			query = actionStatusItem == null ? query :
 				query.Where(w => w.ActionStatusId == actionStatusItem.Id);
 
-			var result = query.Select(s => new InOutHistoryDto
+			var result = query.OrderByDescending(o => o.Created)
+				.Select(s => new InOutHistoryDto
 			{
 				Id = s.Id,
 				ActionStatusName = string.IsNullOrEmpty(s.ActionStatusName) ? "" : s.ActionStatusName,
