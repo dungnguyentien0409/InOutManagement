@@ -102,7 +102,8 @@ namespace Implementations
 				return false;
 			}
 
-			var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == userDto.UserName).FirstOrDefault();
+			var userItem = _unitOfWork.UserInfo.Query()
+				.Where(w => w.UserName == userDto.UserName).FirstOrDefault();
 
 			if (userItem != null)
 			{

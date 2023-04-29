@@ -23,10 +23,6 @@ namespace DataAccessEF
         {
             context.Set<T>().AddRange(entities);
         }
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-        {
-            return context.Set<T>().Where(expression);
-        }
         public IQueryable<T> Query()
         {
             return context.Set<T>();

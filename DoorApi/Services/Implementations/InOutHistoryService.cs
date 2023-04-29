@@ -29,7 +29,8 @@ namespace Implementations
 		{
             try
             {
-                var actionResult = _unitOfWork.ActionStatus.Find(f => f.Name == dto.TapAction)
+                var actionResult = _unitOfWork.ActionStatus.Query()
+                    .Where(w => w.Name == dto.TapAction)
                     .FirstOrDefault();
 
                 if (actionResult == null)

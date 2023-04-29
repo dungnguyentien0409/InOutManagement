@@ -24,7 +24,9 @@ namespace Implementations
 
         public bool CreateRole(RoleDto roleDto)
 		{
-			var roleItem = _unitOfWork.Role.Find(w => w.Name == roleDto.Name).FirstOrDefault();
+			var roleItem = _unitOfWork.Role.Query()
+				.Where(w => w.Name == roleDto.Name)
+				.FirstOrDefault();
 
 			if (roleItem != null)
 			{

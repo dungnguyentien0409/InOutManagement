@@ -26,25 +26,27 @@ namespace Implementations
         {
             try
             {
-                var doorItem = _unitOfWork.Door.Find(f => f.Name == doorRoleDto.DoorName).FirstOrDefault();
+                var doorItem = _unitOfWork.Door.Query()
+                    .Where(w => w.Name == doorRoleDto.DoorName).FirstOrDefault();
                 if (doorItem == null)
                 {
                     _logger.LogError("This door did not existed");
                     return false;
                 }
-                var roleItem = _unitOfWork.Role.Find(f => f.Name == doorRoleDto.RoleName).FirstOrDefault();
+                var roleItem = _unitOfWork.Role.Query()
+                    .Where(w => w.Name == doorRoleDto.RoleName).FirstOrDefault();
                 if (roleItem == null)
                 {
                     _logger.LogError("This role did not existed");
                     return false;
                 }
-                var doorRoleItem = _unitOfWork.DoorRole
-                    .Find(f => f.DoorId == doorItem.Id && f.RoleId == roleItem.Id)
+                var doorRoleItem = _unitOfWork.DoorRole.Query()
+                    .Where(w => w.DoorId == doorItem.Id && w.RoleId == roleItem.Id)
                     .FirstOrDefault();
                 if (doorRoleItem != null)
                 {
                     _logger.LogError("This door role has already existed");
-                    return true;
+                    return false;
                 }
 
                 doorRoleItem = _mapper.Map<DoorRole>(doorRoleDto);
@@ -65,20 +67,22 @@ namespace Implementations
         {
             try
             {
-                var doorItem = _unitOfWork.Door.Find(f => f.Name == doorRoleDto.DoorName).FirstOrDefault();
+                var doorItem = _unitOfWork.Door.Query()
+                    .Where(w => w.Name == doorRoleDto.DoorName).FirstOrDefault();
                 if (doorItem == null)
                 {
                     _logger.LogError("This door did not existed");
                     return false;
                 }
-                var roleItem = _unitOfWork.Role.Find(f => f.Name == doorRoleDto.RoleName).FirstOrDefault();
+                var roleItem = _unitOfWork.Role.Query()
+                    .Where(w => w.Name == doorRoleDto.RoleName).FirstOrDefault();
                 if (roleItem == null)
                 {
                     _logger.LogError("This role did not existed");
                     return false;
                 }
-                var doorRoleItem = _unitOfWork.DoorRole
-                    .Find(f => f.DoorId == doorItem.Id && f.RoleId == roleItem.Id)
+                var doorRoleItem = _unitOfWork.DoorRole.Query()
+                    .Where(w => w.DoorId == doorItem.Id && w.RoleId == roleItem.Id)
                     .FirstOrDefault();
                 if (doorRoleItem == null)
                 {
