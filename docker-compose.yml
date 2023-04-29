@@ -58,9 +58,9 @@ services:
     ports:  
       - '7052:443'
     links:
-      - sqldata
+      - historydata
     depends_on:
-      sqldata:
+      historydata:
         condition: service_started
     networks:
       - myappnetwork
@@ -88,6 +88,19 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:  
       - '1441:1433'
+    networks:
+      - myappnetwork
+
+  historydata:  
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "MyPass@word"  
+    volumes:  
+      - ./data/mssql:/var/opt/mssql3
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:  
+      - '1442:1433'
     networks:
       - myappnetwork
 

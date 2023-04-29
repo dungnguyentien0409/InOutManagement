@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InOutHistoryApi", "InOutHis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainHistory", "DomainHistory\DomainHistory.csproj", "{DEA426D6-E57F-4E4D-9324-4D7F6CE5A55E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessEFHistory", "DataAccessEFHistory\DataAccessEFHistory.csproj", "{5A1C9252-B89F-489E-9090-E88F6A624B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6454CA7B-8E3B-4544-B716-9B9A3F67D8B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA426D6-E57F-4E4D-9324-4D7F6CE5A55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA426D6-E57F-4E4D-9324-4D7F6CE5A55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA426D6-E57F-4E4D-9324-4D7F6CE5A55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA426D6-E57F-4E4D-9324-4D7F6CE5A55E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A1C9252-B89F-489E-9090-E88F6A624B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1C9252-B89F-489E-9090-E88F6A624B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1C9252-B89F-489E-9090-E88F6A624B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1C9252-B89F-489E-9090-E88F6A624B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

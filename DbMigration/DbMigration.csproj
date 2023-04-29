@@ -12,6 +12,8 @@
     <ProjectReference Include="..\DataAccessEF\DataAccessEF.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DataAccessEFHistory\DataAccessEFHistory.csproj" />
+    <ProjectReference Include="..\DomainHistory\DomainHistory.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">

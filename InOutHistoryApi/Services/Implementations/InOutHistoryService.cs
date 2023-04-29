@@ -1,21 +1,21 @@
 ﻿using System;
 using Common.InOutHistoryDto;
-using Domain.Interfaces;
+using DomainHistory.Interfaces;
 using HistoryApi.Interfaces;
 using AutoMapper;
 using Request;
-using Entities;
+using DomainHistory.Entities;
 using Common;
 
 namespace HistoryApi.Implementations
 {
 	public class InOutHistoryService : IInOutHistoryService
     {
-		private readonly IUnitOfWork _unitOfWork;
+		private readonly IHistoryUnitOfWork _unitOfWork;
 		private readonly ILogger<InOutHistoryService> _logger;
 		private readonly IMapper _mapper;
 
-		public InOutHistoryService(IUnitOfWork unitOfWork, ILogger<InOutHistoryService> logger, IMapper mapper)
+		public InOutHistoryService(IHistoryUnitOfWork unitOfWork, ILogger<InOutHistoryService> logger, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
 			_logger = logger;

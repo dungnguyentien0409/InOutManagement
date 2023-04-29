@@ -1,7 +1,8 @@
 ﻿using System;
-using Entities;
+using DomainHistory.Entities;
+using DomainHistory.Interfaces;
 
-namespace Domain.Interfaces
+namespace DomainHistory.Interfaces
 {
 	public interface IInOutHistoryRepository : IGenericRepository<InOutHistory>
 	{

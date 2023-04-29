@@ -1,6 +1,6 @@
 ﻿using DataAccessEF;
 using HistoryApi.Interfaces;
-using Domain.Interfaces;
+using DomainHistory.Interfaces;
 using DataAccessEF.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +22,10 @@ builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 builder.Configuration.AddConfigurationFile("appsettings.json");
-builder.Services.AddDbContext<InOutManagementContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
+builder.Services.AddDbContext<HistoryContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HistoryConnection"))
 );
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IHistoryUnitOfWork, HistoryUnitOfWork>();
 builder.Services.AddTransient<IInOutHistoryService, InOutHistoryService>();
 builder.Services.AddSingleton(new MapperConfiguration(mc =>
 {
@@ -73,7 +73,7 @@ if (app.Environment.IsDevelopment())
 
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
-    var context = serviceScope.ServiceProvider.GetRequiredService<InOutManagementContext>();
+    var context = serviceScope.ServiceProvider.GetRequiredService<HistoryContext>();
     Console.WriteLine("InOutHistory API connect db: " + context.Database.CanConnect());
 }
 

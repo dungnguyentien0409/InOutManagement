@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessEF.Migrations
 {
     [DbContext(typeof(InOutManagementContext))]
-    [Migration("20230428170838_MyMigrationName")]
+    [Migration("20230429225435_MyMigrationName")]
     partial class MyMigrationName
     {
         /// <inheritdoc />
@@ -89,38 +89,6 @@ namespace DataAccessEF.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("DoorRole");
-                });
-
-            modelBuilder.Entity("Entities.InOutHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ActionStatusId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ActionStatusName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DoorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DoorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InOutHistory");
                 });
 
             modelBuilder.Entity("Entities.Role", b =>

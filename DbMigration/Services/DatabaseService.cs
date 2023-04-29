@@ -5,6 +5,7 @@ using DataAccessEF.UnitOfWork;
 using Entities;
 using Common.Helpers;
 using Helper;
+using DomainHistory.Interfaces;
 
 namespace Services
 {
@@ -13,10 +14,16 @@ namespace Services
 		private readonly InOutManagementContext _context;
 		private readonly IUnitOfWork _unitOfWork;
 
-		public DatabaseService(InOutManagementContext context)
+        private readonly HistoryContext _historyContext;
+        private readonly IHistoryUnitOfWork _historyUnitOfWork;
+
+		public DatabaseService(InOutManagementContext context, HistoryContext historyContext)
 		{
 			_context = context;
 			_unitOfWork = new UnitOfWork(context);
+
+            _historyContext = historyContext;
+            _historyUnitOfWork = new HistoryUnitOfWork(historyContext);
 		}
 
         public void CreateDefaultData()
@@ -30,7 +37,8 @@ namespace Services
 
         private void CleanUpData()
         {
-            _unitOfWork.InOutHistory.RemoveRange(_unitOfWork.InOutHistory.Query().ToList());
+            _historyUnitOfWork.InOutHistory.RemoveRange(_historyUnitOfWork.InOutHistory.Query().ToList());
+
             _unitOfWork.ActionStatus.RemoveRange(_unitOfWork.ActionStatus.Query().ToList());
             _unitOfWork.Door.RemoveRange(_unitOfWork.Door.Query().ToList());
             _unitOfWork.UserInfo.RemoveRange(_unitOfWork.UserInfo.Query().ToList());
