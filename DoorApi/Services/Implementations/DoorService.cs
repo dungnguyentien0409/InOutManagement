@@ -4,6 +4,7 @@ using DoorApi.Interfaces;
 using Entities;
 using AutoMapper;
 using Common.DoorDto;
+using Common;
 
 namespace DoorApi.Implementations
 {
@@ -22,15 +23,52 @@ namespace DoorApi.Implementations
 
 		public async Task<bool> Open(TapDoorDto dto)
 		{
+			var result = await TryOpen(dto);
+
+			if (!result)
+			{
+				ChangeActionStatus(dto);
+			}
+
+			return result;
+        }
+
+		private async void ChangeActionStatus(TapDoorDto dto)
+		{
+            if (dto.TapAction == Constants.TapAction.TAPIN)
+            {
+                dto.TapAction = Constants.TapAction.FAILED_TAPIN;
+            }
+            else if (dto.TapAction == Constants.TapAction.TAPOUT)
+            {
+                dto.TapAction = Constants.TapAction.FAILED_TAPOUT;
+            }
+
+			try
+			{
+				var actionStatusItem = _unitOfWork.ActionStatus.Query()
+					.Where(w => w.Name == dto.TapAction)
+					.FirstOrDefault();
+
+				dto.ActionStatusId = actionStatusItem.Id;
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Cannot find action id: " + ex.Message);
+			}
+        }
+
+		private async Task<bool> TryOpen(TapDoorDto dto)
+		{
             var doorItem = _unitOfWork.Door.Query()
-				.Where(w => w.Name == dto.DoorName).FirstOrDefault();
+                .Where(w => w.Name == dto.DoorName).FirstOrDefault();
             if (doorItem == null)
             {
                 _logger.LogError("Door not existed");
                 return false;
             }
             var userItem = _unitOfWork.UserInfo.Query()
-				.Where(w => w.UserName == dto.UserName).FirstOrDefault();
+                .Where(w => w.UserName == dto.UserName).FirstOrDefault();
             if (userItem == null)
             {
                 _logger.LogError("User not existed");

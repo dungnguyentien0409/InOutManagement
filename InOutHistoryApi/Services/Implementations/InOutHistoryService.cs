@@ -43,9 +43,12 @@ namespace HistoryApi.Implementations
 					.Select(s => new InOutHistoryDto
 					{
 						Id = s.Id,
-						ActionStatusName = string.IsNullOrEmpty(s.ActionStatusName) ? "" : s.ActionStatusName,
-						DoorName = string.IsNullOrEmpty(s.DoorName) ? "" : s.DoorName,
-						UserName = string.IsNullOrEmpty(s.UserName) ? "" : s.UserName,
+						ActionStatusName = s.ActionStatusName,
+						DoorName = s.DoorName,
+						UserName = s.UserName,
+						UserId = s.UserId,
+						DoorId = s.DoorId,
+						ActionStatusId = s.ActionStatusId,
 						Created = s.Created
 					}).ToList();
 
@@ -65,9 +68,9 @@ namespace HistoryApi.Implementations
 				var history = new InOutHistory();
 				history.Id = Guid.NewGuid();
 				history.Created = DateTime.Now;
-				history.UserId = request.Id;
-				history.DoorId = request.Id;
-				history.ActionStatusId = request.Id;
+				history.UserId = request.UserId;
+				history.DoorId = request.DoorId;
+				history.ActionStatusId = request.ActionStatusId;
 				history.UserName = request.UserName;
 				history.DoorName = request.DoorName;
 				history.ActionStatusName = request.ActionStatusName;
