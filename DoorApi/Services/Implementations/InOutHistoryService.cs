@@ -47,7 +47,7 @@ namespace DoorApi.Implementations
                 var request = new InOutHistoryRequest();
                 request.DoorId = dto.DoorId;
                 request.UserId = dto.UserId;
-                request.ActionStatusId = dto.ActionResultId;
+                request.ActionStatusId = dto.ActionStatusId;
                 request.DoorName = dto.DoorName;
                 request.UserName = dto.UserName;
                 request.ActionStatusName = dto.TapAction;
