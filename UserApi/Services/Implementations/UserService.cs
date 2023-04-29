@@ -98,7 +98,11 @@ namespace UserApi.Implementations
 
 		private bool VerifyUserInfo(UserInfoDto userDto)
 		{
-			if (string.IsNullOrEmpty(userDto.UserName) || string.IsNullOrEmpty(userDto.Password))
+			if (string.IsNullOrEmpty(userDto.UserName)
+				|| userDto.UserName.Any(x => Char.IsWhiteSpace(x))
+				|| string.IsNullOrEmpty(userDto.Password)
+				|| userDto.Password.Any(x => Char.IsWhiteSpace(x))
+				|| !VerifyPassword(userDto.Password))
 			{
 				return false;
 			}
@@ -112,6 +116,30 @@ namespace UserApi.Implementations
 			}
 
 			return true;
+		}
+
+		private bool VerifyPassword(string password)
+		{
+            if (password.Length < 8 || password.Length > 32)
+                return false;
+
+            if (!password.Any(char.IsUpper))
+                return false;
+
+            if (!password.Any(char.IsLower))
+                return false;
+
+            if (password.Contains(" "))
+                return false;
+
+            var specialChars = (@"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"").ToCharArray();
+            foreach (char ch in specialChars)
+            {
+                if (password.Contains(ch))
+                    return true;
+            }
+
+            return false;
 		}
 
 		private string GenerateJwtToken(UserInfoDto userDto)
