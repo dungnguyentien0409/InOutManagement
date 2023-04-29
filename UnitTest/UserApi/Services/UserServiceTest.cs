@@ -86,17 +86,21 @@ namespace UnitTest.UserApi.Services
         }
 
         [Test]
-		public void SignUp()
+		[TestCase("Test", "Test", false)]
+		[TestCase("Test", "This ismyPassWord 123!", false)]
+        [TestCase("Test", "thisismypassword123", false)]
+        [TestCase("Test", "ThisIsMyPassWord123!", true)]
+		public void SignUp(string username, string password, bool check)
 		{
 			var dto = new UserInfoDto
 			{
-				UserName = "Test",
-				Password = "Test"
+				UserName = username,
+				Password = password
 			};
 
 			var result = _userService.SignUp(dto);
 
-			Assert.That(result, Is.EqualTo(true));
+			Assert.That(result, Is.EqualTo(check));
 		}
 
 		[Test]

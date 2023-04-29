@@ -84,7 +84,6 @@ namespace UnitTest.InOutHistoryApi.Services
             Assert.That(result, Is.EqualTo(count));
         }
 
-        public void AddHistoryTest()
     }
 }
 
