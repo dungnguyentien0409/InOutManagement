@@ -12,3 +12,6 @@ dotnet ef database update
 
 dotnet ef migrations add MyMigrationName --startup-project DbMigration --project DataAccessEF
 dotnet ef database update --startup-project DbMigration --project DataAccessEF
+
+dotnet ef migrations add MyMigrationName --startup-project DbMigration --project DataAccessEFHistory
+dotnet ef database update --startup-project DbMigration --project DataAccessEFHistory

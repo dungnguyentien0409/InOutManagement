@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entities
+namespace DomainHistory.Entities
 {
 	[Table("InOutHistory")]
 	public class InOutHistory : EntityBase

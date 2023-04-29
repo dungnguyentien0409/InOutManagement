@@ -2,12 +2,14 @@
 using HistoryApi.MappingProfiles;
 using HistoryApi.Implementations;
 using Request;
+using DomainHistory.Entities;
+using DomainHistory.Interfaces;
 
 namespace UnitTest.InOutHistoryApi.Services
 {
 	public class InOutHistoryServiceTest
 	{
-        private Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+        private Mock<IHistoryUnitOfWork> _historyUnitOfWork = new Mock<IHistoryUnitOfWork>();
         private Mock<ILogger<InOutHistoryService>> _logger = new Mock<ILogger<InOutHistoryService>>();
         private Mock<IConfiguration> _config;
         private InOutHistoryService _historyService;
@@ -23,7 +25,7 @@ namespace UnitTest.InOutHistoryApi.Services
 
             InitData();
 
-            _historyService = new InOutHistoryService(_unitOfWork.Object, _logger.Object, mapper);
+            _historyService = new InOutHistoryService(_historyUnitOfWork.Object, _logger.Object, mapper);
         }
 
         private void InitData()
@@ -60,8 +62,8 @@ namespace UnitTest.InOutHistoryApi.Services
                 }
             }.AsQueryable<InOutHistory>;
 
-            _unitOfWork.Setup(x => x.InOutHistory.Query()).Returns(histories);
-            _unitOfWork.Setup(x => x.InOutHistory.Add(It.IsAny<InOutHistory>())).Verifiable();
+            _historyUnitOfWork.Setup(x => x.InOutHistory.Query()).Returns(histories);
+            _historyUnitOfWork.Setup(x => x.InOutHistory.Add(It.IsAny<InOutHistory>())).Verifiable();
         }
 
         [Test]

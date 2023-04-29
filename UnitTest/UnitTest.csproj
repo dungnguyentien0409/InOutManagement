@@ -28,6 +28,8 @@
     <ProjectReference Include="..\DoorApi\DoorApi.csproj" />
     <ProjectReference Include="..\InOutHistoryApi\InOutHistoryApi.csproj" />
     <ProjectReference Include="..\UserApi\UserApi.csproj" />
+    <ProjectReference Include="..\DataAccessEFHistory\DataAccessEFHistory.csproj" />
+    <ProjectReference Include="..\DomainHistory\DomainHistory.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="UserApi\" />

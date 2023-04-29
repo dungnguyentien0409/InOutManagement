@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Interfaces;
+using DomainHistory.Interfaces;
 using HistoryApi.Interfaces;
 using AutoMapper;
 using Common.InOutHistoryDto;
@@ -13,12 +13,12 @@ namespace InOutHistoryApi.Controllers
     [Route("history")]
     public class InOutHistoryController : ControllerBase
     {
-		private readonly IUnitOfWork _unitOfWork;
+		private readonly IHistoryUnitOfWork _unitOfWork;
 		private readonly ILogger<InOutHistoryController> _logger;
 		private readonly IMapper _mapper;
 		private readonly IInOutHistoryService _historyService;
 
-		public InOutHistoryController(IUnitOfWork unitOfWork, ILogger<InOutHistoryController> logger, IMapper mapper,
+		public InOutHistoryController(IHistoryUnitOfWork unitOfWork, ILogger<InOutHistoryController> logger, IMapper mapper,
             IInOutHistoryService historyService)
 		{
 			_unitOfWork = unitOfWork;

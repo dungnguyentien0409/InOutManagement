@@ -15,7 +15,6 @@ namespace DataAccessEF.UnitOfWork
 		public IRoleRepository Role { get; }
 		public IUserInfoRepository UserInfo { get; }
 		public IUserInfoRoleRepository UserInfoRole { get; }
-		public IInOutHistoryRepository InOutHistory { get; }
 		public IActionStatusRepository ActionStatus { get; }
 
 		public UnitOfWork(InOutManagementContext context)
@@ -27,7 +26,6 @@ namespace DataAccessEF.UnitOfWork
 			Role = new RoleRepository(context);
 			UserInfo = new UserInfoRepository(context);
 			UserInfoRole = new UserInfoRoleRepository(context);
-			InOutHistory = new InOutHistoryRepository(context);
 			ActionStatus = new ActionStatusRepository(context);
 		}
 
