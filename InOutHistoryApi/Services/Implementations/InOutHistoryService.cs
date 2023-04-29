@@ -24,51 +24,50 @@ namespace HistoryApi.Implementations
 
 		public async Task<List<InOutHistoryDto>> GetInOutHistories(InOutHistoryRequest request)
 		{
-			var (doorItem, userItem, actionStatusItem) = await GetReferenceData(request);
-			var query = _unitOfWork.InOutHistory.Query();
-
-			query = request.StartTime == null ? query :
-				query.Where(w => w.Created >= request.StartTime);
-			query = request.EndTime == null ? query :
-				query.Where(w => w.Created <= request.EndTime);
-			query = doorItem == null ? query :
-				query.Where(w => w.DoorId == doorItem.Id);
-			query = userItem == null ? query :
-				query.Where(w => w.UserId == userItem.Id);
-			query = actionStatusItem == null ? query :
-				query.Where(w => w.ActionStatusId == actionStatusItem.Id);
-
-			var result = query.OrderByDescending(o => o.Created)
-				.Select(s => new InOutHistoryDto
+			try
 			{
-				Id = s.Id,
-				ActionStatusName = string.IsNullOrEmpty(s.ActionStatusName) ? "" : s.ActionStatusName,
-				DoorName = string.IsNullOrEmpty(s.DoorName) ? "" : s.DoorName,
-				UserName = string.IsNullOrEmpty(s.UserName) ? "" : s.UserName,
-				Created = s.Created
-			}).ToList();
+				var query = _unitOfWork.InOutHistory.Query();
 
-			return result;
+				query = request.StartTime == null ? query :
+					query.Where(w => w.Created >= request.StartTime);
+				query = request.EndTime == null ? query :
+					query.Where(w => w.Created <= request.EndTime);
+				query = string.IsNullOrEmpty(request.DoorName) ? query :
+					query.Where(w => w.DoorName == request.DoorName);
+				query = string.IsNullOrEmpty(request.UserName) ? query :
+					query.Where(w => w.UserName == request.UserName);
+				query = string.IsNullOrEmpty(request.ActionStatusName) ? query :
+					query.Where(w => w.ActionStatusName == request.ActionStatusName);
+
+				var result = query.OrderByDescending(o => o.Created)
+					.Select(s => new InOutHistoryDto
+					{
+						Id = s.Id,
+						ActionStatusName = string.IsNullOrEmpty(s.ActionStatusName) ? "" : s.ActionStatusName,
+						DoorName = string.IsNullOrEmpty(s.DoorName) ? "" : s.DoorName,
+						UserName = string.IsNullOrEmpty(s.UserName) ? "" : s.UserName,
+						Created = s.Created
+					}).ToList();
+
+				return result;
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error when get list histoties: " + ex.Message);
+				return new List<InOutHistoryDto>();
+			}
 		}
 
         public async Task AddHistory(InOutHistoryRequest request)
 		{
-			var (doorItem, userItem, actionStatusItem) = await GetReferenceData(request);
-
-			if (doorItem == null || userItem == null || actionStatusItem == null)
-			{
-				_logger.LogError("Reference data not existed");
-				return;
-			}
-
 			try
 			{
 				var history = new InOutHistory();
 				history.Id = Guid.NewGuid();
 				history.Created = DateTime.Now;
-				history.UserId = userItem.Id;
-				history.DoorId = doorItem.Id;
-				history.ActionStatusId = actionStatusItem.Id;
+				history.UserId = request.Id;
+				history.DoorId = request.Id;
+				history.ActionStatusId = request.Id;
 				history.UserName = request.UserName;
 				history.DoorName = request.DoorName;
 				history.ActionStatusName = request.ActionStatusName;
@@ -80,31 +79,6 @@ namespace HistoryApi.Implementations
 			{
 				_logger.LogError("Error when write log: " + ex.Message);
             }
-		}
-
-        private async Task<(Door?, UserInfo?, ActionStatus?)> GetReferenceData(InOutHistoryRequest request)
-		{
-			try
-			{
-				var doorItem = !string.IsNullOrEmpty(request.DoorName) ?
-					_unitOfWork.Door.Query()
-					.Where(w => w.Name == request.DoorName)
-					.FirstOrDefault() : null;
-				var userItem = !string.IsNullOrEmpty(request.UserName) ?
-					_unitOfWork.UserInfo.Query()
-					.Where(w => !string.IsNullOrEmpty(request.UserName) && w.UserName == request.UserName)
-					.FirstOrDefault() : null;
-				var actionStatusItem = !string.IsNullOrEmpty(request.ActionStatusName) ?
-					_unitOfWork.ActionStatus.Query()
-					.Where(w => w.Name == request.ActionStatusName)
-					.FirstOrDefault() : null;
-
-				return (doorItem, userItem, actionStatusItem);
-			}
-			catch(Exception ex) {
-				_logger.LogError("Cannot get referece data: " + ex.Message);
-				return (null, null, null);
-			}
 		}
     }
 }

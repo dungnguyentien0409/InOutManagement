@@ -45,6 +45,9 @@ namespace DoorApi.Implementations
                 var httpClient = new HttpClient(clientHandler);
                 var url = _config.GetValue<string>("Endpoints:HistoryApi") + "history/add";
                 var request = new InOutHistoryRequest();
+                request.DoorId = dto.DoorId;
+                request.UserId = dto.UserId;
+                request.ActionStatusId = dto.ActionResultId;
                 request.DoorName = dto.DoorName;
                 request.UserName = dto.UserName;
                 request.ActionStatusName = dto.TapAction;
