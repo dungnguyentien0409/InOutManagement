@@ -8,3 +8,5 @@ global using Implementations;
 global using Microsoft.Extensions.Logging;
 global using AutoMapper;
 global using Entities;
+global using Microsoft.Extensions.Configuration;
+global using System.Text;

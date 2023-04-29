@@ -21,24 +21,25 @@ namespace Implementations
 
 		public async Task<bool> Open(TapDoorDto dto)
 		{
-			_logger.LogError("Start to open");
-            var doorItem = _unitOfWork.Door.Find(f => f.Name == dto.DoorName).FirstOrDefault();
+            var doorItem = _unitOfWork.Door.Query()
+				.Where(w => w.Name == dto.DoorName).FirstOrDefault();
             if (doorItem == null)
             {
                 _logger.LogError("Door not existed");
                 return false;
             }
-            var userItem = _unitOfWork.UserInfo.Find(f => f.UserName == dto.UserName).FirstOrDefault();
+            var userItem = _unitOfWork.UserInfo.Query()
+				.Where(w => w.UserName == dto.UserName).FirstOrDefault();
             if (userItem == null)
             {
                 _logger.LogError("User not existed");
                 return false;
             }
-            var userRoles = _unitOfWork.UserInfoRole
-                .Find(f => f.UserInfoId == userItem.Id)
+            var userRoles = _unitOfWork.UserInfoRole.Query()
+                .Where(w => w.UserInfoId == userItem.Id)
                 .Select(s => s.RoleId).ToList();
-            var doorRoles = _unitOfWork.DoorRole.
-                Find(f => f.DoorId == doorItem.Id)
+            var doorRoles = _unitOfWork.DoorRole.Query()
+                .Where(w => w.DoorId == doorItem.Id)
                 .Select(s => s.RoleId).ToList();
 
             if (!doorRoles.Intersect(userRoles).Any())
@@ -47,8 +48,6 @@ namespace Implementations
                 return false;
             }
 
-			_logger.LogError("Finish open");
-
             return true;
         }
 
@@ -56,7 +55,8 @@ namespace Implementations
 		{
 			try
 			{
-				var doorItem = _unitOfWork.Door.Find(f => f.Name == doorDto.Name).FirstOrDefault();
+				var doorItem = _unitOfWork.Door.Query()
+					.Where(w => w.Name == doorDto.Name).FirstOrDefault();
 
 				if (doorItem != null)
 				{

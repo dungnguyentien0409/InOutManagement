@@ -6,7 +6,6 @@ using Implementations;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

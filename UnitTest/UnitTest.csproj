@@ -32,9 +32,13 @@
   <ItemGroup>
     <None Remove="UserApi\" />
     <None Remove="UserApi\Services\" />
+    <None Remove="DoorApi\" />
+    <None Remove="DoorApi\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UserApi\" />
     <Folder Include="UserApi\Services\" />
+    <Folder Include="DoorApi\" />
+    <Folder Include="DoorApi\Services\" />
   </ItemGroup>
 </Project>

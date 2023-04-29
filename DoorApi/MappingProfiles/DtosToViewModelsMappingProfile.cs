@@ -3,7 +3,7 @@ using AutoMapper;
 using Common.DoorDto;
 using Requests;
 
-namespace MappingProfiles
+namespace DoorApi.MappingProfiles
 {
 	public class DtosToViewModelsMappingProfile : Profile
 	{

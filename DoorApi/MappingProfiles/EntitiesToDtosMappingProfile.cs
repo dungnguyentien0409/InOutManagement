@@ -3,7 +3,7 @@ using AutoMapper;
 using Entities;
 using Common.DoorDto;
 
-namespace MappingProfiles
+namespace DoorApi.MappingProfiles
 {
 	public class EntitiesToDtosMappingProfile : Profile
 	{

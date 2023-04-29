@@ -3,7 +3,7 @@ using AutoMapper;
 using DataAccessEF;
 using Implementations;
 using Interfaces;
-using MappingProfiles;
+using DoorApi.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

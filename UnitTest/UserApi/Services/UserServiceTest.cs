@@ -3,7 +3,6 @@ using System.Reflection.PortableExecutable;
 using Common.UserDto;
 using UserApi.MappingProfiles;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using System.Linq.Expressions;
 
 namespace UnitTest.UserApi.Services
