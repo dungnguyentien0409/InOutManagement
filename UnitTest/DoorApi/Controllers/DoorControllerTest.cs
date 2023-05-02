@@ -30,19 +30,17 @@ namespace UnitTest.DoorApi.Controllers
 
             _iotGatewayService.Setup(x => x.SendDoorStatus(It.IsAny<TapDoorDto>())).Verifiable();
             _historyService.Setup(x => x.SaveToHistory(It.IsAny<TapDoorDto>())).Verifiable();
-
-            _doorService.SetupSequence(x => x.Open(It.IsAny<TapDoorDto>()))
-                .Returns(Task.FromResult(true))
-                .Returns(Task.FromResult(false));
-
             _doorService.Setup(x => x.CreateDoor(It.IsAny<DoorDto>())).Returns(true);
         }
 
         [Test]
         [TestCase("Test", "Test", "Test", true)]
         [TestCase("Test2", "Test2", "Test2", false)]
-        public void OpenDoorTest(string userName, string doorName, string tapAction, bool result)
+        public void OpenDoorTest(string userName, string doorName, string tapAction, bool check)
         {
+            _doorService.Setup(x => x.Open(It.IsAny<TapDoorDto>()))
+                .Returns(Task.FromResult(check));
+
             var request = new TapDoorRequest()
             {
                 UserName = userName,
@@ -52,7 +50,7 @@ namespace UnitTest.DoorApi.Controllers
 
             var res = _doorController.Open(request).Result;
 
-            Assert.That(result, Is.EqualTo(result));
+            Assert.That(check, Is.EqualTo(res));
         }
 
         [Test]
