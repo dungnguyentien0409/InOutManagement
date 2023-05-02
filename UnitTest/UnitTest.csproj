@@ -42,6 +42,8 @@
     <None Remove="InOutHistoryApi\Services\" />
     <None Remove="UserApi\Controllers\" />
     <None Remove="DoorApi\Controllers\" />
+    <None Remove="InOutHistoryApi\Controllers\" />
+    <None Remove="AdminApi\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UserApi\" />
@@ -54,5 +56,7 @@
     <Folder Include="InOutHistoryApi\Services\" />
     <Folder Include="UserApi\Controllers\" />
     <Folder Include="DoorApi\Controllers\" />
+    <Folder Include="InOutHistoryApi\Controllers\" />
+    <Folder Include="AdminApi\Controllers\" />
   </ItemGroup>
 </Project>

@@ -40,7 +40,7 @@ namespace UnitTest.DoorApi.Controllers
 
         [Test]
         [TestCase("Test", "Test", "Test", true)]
-        [TestCase("Test", "Test", "Test", false)]
+        [TestCase("Test2", "Test2", "Test2", false)]
         public void OpenDoorTest(string userName, string doorName, string tapAction, bool result)
         {
             var request = new TapDoorRequest()
