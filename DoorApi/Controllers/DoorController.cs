@@ -31,7 +31,7 @@ namespace DoorApi.Controllers
 			_historyService = historyService;
 		}
 
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPost("open")]
 		public async Task<bool> Open(TapDoorRequest request)
 		{
@@ -61,6 +61,7 @@ namespace DoorApi.Controllers
 			}
 		}
 
+        [Authorize]
         [HttpPost("create")]
         public bool Create(DoorRequest request)
         {
