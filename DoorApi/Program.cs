@@ -81,6 +81,8 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().Create
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
